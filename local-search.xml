@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Hexo演示文稿</title>
+    <link href="/2023/04/14/HexoDemo/"/>
+    <url>/2023/04/14/HexoDemo/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Hexo演示文稿"><a href="#Hexo演示文稿" class="headerlink" title="Hexo演示文稿"></a>Hexo演示文稿</h1><h2 id="一、本文稿用于测试和学习Hexo的相关知识"><a href="#一、本文稿用于测试和学习Hexo的相关知识" class="headerlink" title="一、本文稿用于测试和学习Hexo的相关知识"></a>一、本文稿用于测试和学习Hexo的相关知识</h2><p>​    为了更好的学习Hexo相关的内容，我们创建了此文稿并实现一些功能。为之后的Hexo文档编写做好准备。</p><h2 id="二、代码行演示（常用的Hexo命令）"><a href="#二、代码行演示（常用的Hexo命令）" class="headerlink" title="二、代码行演示（常用的Hexo命令）"></a>二、代码行演示（常用的Hexo命令）</h2><h3 id="1、清除之前生成的代码（先cd进入博客目录）"><a href="#1、清除之前生成的代码（先cd进入博客目录）" class="headerlink" title="1、清除之前生成的代码（先cd进入博客目录）"></a>1、清除之前生成的代码（先cd进入博客目录）</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo clean</span><br></code></pre></td></tr></table></figure><h3 id="2、生成新的网站"><a href="#2、生成新的网站" class="headerlink" title="2、生成新的网站"></a>2、生成新的网站</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo g</span><br></code></pre></td></tr></table></figure><h3 id="3-1、启动本地端口"><a href="#3-1、启动本地端口" class="headerlink" title="3-1、启动本地端口"></a>3-1、启动本地端口</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo s</span><br></code></pre></td></tr></table></figure><h3 id="3-2、上传到GitHub"><a href="#3-2、上传到GitHub" class="headerlink" title="3-2、上传到GitHub"></a>3-2、上传到GitHub</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo d</span><br></code></pre></td></tr></table></figure><p>相关配置文章：</p><p>1、<a href="https://hexo.io/zh-cn/docs/front-matter">https://hexo.io/zh-cn/docs/front-matter</a></p><p>2、<a href="https://hexo.fluid-dev.com/docs/guide/">https://hexo.fluid-dev.com/docs/guide/</a></p><p>3、<a href="https://zhuanlan.zhihu.com/p/547520780?utm_id=0">https://zhuanlan.zhihu.com/p/547520780?utm_id=0</a></p><h2 id="三、图片演示"><a href="#三、图片演示" class="headerlink" title="三、图片演示"></a>三、图片演示</h2><h3 id="1、来自于Hexo内部文件夹"><a href="#1、来自于Hexo内部文件夹" class="headerlink" title="1、来自于Hexo内部文件夹"></a>1、来自于Hexo内部文件夹</h3><p><img src="/img/testphoto.png"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Hexo</category>
+      
+      <category>Study</category>
+      
+      <category>CTF</category>
+      
+      <category>Web</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CTF</tag>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
