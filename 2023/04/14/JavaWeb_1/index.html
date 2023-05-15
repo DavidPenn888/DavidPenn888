@@ -23,11 +23,15 @@
 <meta property="og:site_name" content="DavidPenn 的博客">
 <meta property="og:description" content="JavaWeb_1一、Maven常用的Maven仓库 用pom.xml文件表示： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/1/Mapper1.png">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/1/SqlSessionFactoryUtils1.png">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/1/SqlSessionFactoryUtils2.png">
 <meta property="article:published_time" content="2023-04-14T09:44:40.000Z">
-<meta property="article:modified_time" content="2023-05-15T16:32:32.209Z">
+<meta property="article:modified_time" content="2023-05-15T16:38:51.697Z">
 <meta property="article:author" content="David Penn">
 <meta property="article:tag" content="JavaWeb">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://penndavid.github.io/img/JavaWeb/1/Mapper1.png">
   
   
   
@@ -283,7 +287,7 @@
 <h2 id="二、MyBatis"><a href="#二、MyBatis" class="headerlink" title="二、MyBatis"></a>二、MyBatis</h2><p>优秀的持久层框架，简化JDBC的开发</p>
 <p>JavaEE的三层：表现层、业务层、持久层</p>
 <p>可以理解为Java程序与数据库的连接和交换方式</p>
-<h2 id="三、Mapper"><a href="#三、Mapper" class="headerlink" title="三、Mapper"></a>三、Mapper</h2><h4 id="首先注意映射关系，如图："><a href="#首先注意映射关系，如图：" class="headerlink" title="首先注意映射关系，如图："></a>首先注意映射关系，如图：</h4><p><img src="" srcset="/img/loading.gif" lazyload alt="/img/JavaWeb/1/Mapper1.png"></p>
+<h2 id="三、Mapper"><a href="#三、Mapper" class="headerlink" title="三、Mapper"></a>三、Mapper</h2><h4 id="首先注意映射关系，如图："><a href="#首先注意映射关系，如图：" class="headerlink" title="首先注意映射关系，如图："></a>首先注意映射关系，如图：</h4><p><img src="/img/JavaWeb/1/Mapper1.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="1、写在xml文件中的方法"><a href="#1、写在xml文件中的方法" class="headerlink" title="1、写在xml文件中的方法"></a>1、写在xml文件中的方法</h4><p>BrandMapper.xml</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">mapper</span></span><br><span class="hljs-meta">        <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mapper</span> <span class="hljs-attr">namespace</span>=<span class="hljs-string">&quot;com.study.mapper.BrandMapper&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;brandResultMap&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;brand&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;brand_name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;brandName&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">result</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;company_name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;companyName&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">result</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mapper</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
@@ -319,8 +323,8 @@
 <p>相关的调用和替代：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@WebServlet(&quot;/request-demo/registerServlet&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RegisterServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doGet</span><span class="hljs-params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="hljs-keyword">throws</span> ServletException, IOException &#123;<br><br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doPost</span><span class="hljs-params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="hljs-keyword">throws</span> ServletException, IOException &#123;<br>        <span class="hljs-comment">//1.接受用户数据</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> req.getParameter(<span class="hljs-string">&quot;username&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">password</span> <span class="hljs-operator">=</span> req.getParameter(<span class="hljs-string">&quot;password&quot;</span>);<br><br>        <span class="hljs-comment">//2.封装用户对象</span><br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>();<br>        user.setUsername(username);<br>        user.setPassword(password);<br><br>        <span class="hljs-comment">//3.调用mapper，根据用户名查询用户对象</span><br><span class="hljs-comment">//        String resource = &quot;mybatis-config.xml&quot;;</span><br><span class="hljs-comment">//        InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="hljs-comment">//        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="hljs-comment">//        上面为旧方法，下面用调用静态方法解决：</span><br>        <span class="hljs-type">SqlSessionFactory</span> <span class="hljs-variable">sqlSessionFactory</span> <span class="hljs-operator">=</span> SqlSessionFactoryUtils.getSqlSessionFactory();<br><br>        <span class="hljs-type">SqlSession</span> <span class="hljs-variable">sqlSession</span> <span class="hljs-operator">=</span> sqlSessionFactory.openSession();<br>        <span class="hljs-type">UserMapper</span> <span class="hljs-variable">userMapper</span> <span class="hljs-operator">=</span> sqlSession.getMapper(UserMapper.class);<br>        <span class="hljs-type">User</span> <span class="hljs-variable">u</span> <span class="hljs-operator">=</span> userMapper.selectByUsername(username);<br><br>        <span class="hljs-comment">//4.判断对象是否存在</span><br>        <span class="hljs-keyword">if</span> (u == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">//用户名不存在，添加用户</span><br>            userMapper.add(user);<br>            sqlSession.commit();<br>            sqlSession.close();<br>            resp.setContentType(<span class="hljs-string">&quot;text/html;charset=utf-8&quot;</span>);<br>            resp.getWriter().write(<span class="hljs-string">&quot;注册成功&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//用户已存在，提示</span><br>            resp.setContentType(<span class="hljs-string">&quot;text/html;charset=utf-8&quot;</span>);<br>            resp.getWriter().write(<span class="hljs-string">&quot;用户已存在&quot;</span>);<br>        &#125;<br><br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
-<p><img src="" srcset="/img/loading.gif" lazyload alt="/img/JavaWeb/1/SqlSessionFactoryUtils1.png"></p>
-<p><img src="" srcset="/img/loading.gif" lazyload alt="/img/JavaWeb/1/SqlSessionFactoryUtils2.png"></p>
+<p><img src="/img/JavaWeb/1/SqlSessionFactoryUtils1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/JavaWeb/1/SqlSessionFactoryUtils2.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -418,15 +422,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/14/JavaWeb_2/" title="JavaWeb基础2">
+                      <a href="/2023/04/14/HexoDemo/" title="Hexo演示文稿">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JavaWeb基础2</span>
+                        <span class="hidden-mobile">Hexo演示文稿</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2023/04/14/JavaWeb_2/" title="JavaWeb基础2">
+                        <span class="hidden-mobile">JavaWeb基础2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
