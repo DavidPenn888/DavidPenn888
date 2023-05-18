@@ -16,18 +16,23 @@
   <meta name="author" content="David Penn">
   <meta name="keywords" content="Blog">
   
-    <meta name="description" content="JavaWeb_2八、Filter九、Listener十、AJAX十一、JSON十二、Vue十三、Element">
+    <meta name="description" content="JavaWeb_2八、Filter概念：FiIter表示过滤器，是 JavaWeb三大组件(Servlet、Filter、Listener)之一过滤器可以把对资源的请求拦截下来，从而实现一些特殊的功能。过滤器一般完成一些通用的操作，比如：权限控制、统一编码处理、敏感字符处理等等  1、入门Filter类的案例： 1234567891011121314151617181920212223242526">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaWeb基础2">
-<meta property="og:url" content="https://penndavid.github.io/2023/05/16/JavaWeb_2/index.html">
+<meta property="og:url" content="https://penndavid.github.io/2023/05/18/JavaWeb_2/index.html">
 <meta property="og:site_name" content="DavidPenn 的博客">
-<meta property="og:description" content="JavaWeb_2八、Filter九、Listener十、AJAX十一、JSON十二、Vue十三、Element">
+<meta property="og:description" content="JavaWeb_2八、Filter概念：FiIter表示过滤器，是 JavaWeb三大组件(Servlet、Filter、Listener)之一过滤器可以把对资源的请求拦截下来，从而实现一些特殊的功能。过滤器一般完成一些通用的操作，比如：权限控制、统一编码处理、敏感字符处理等等  1、入门Filter类的案例： 1234567891011121314151617181920212223242526">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-16T02:18:00.000Z">
-<meta property="article:modified_time" content="2023-05-16T07:16:16.501Z">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2/Filter1.png">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2/Filter2.png">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2/Filter3.png">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2/Listener1.png">
+<meta property="article:published_time" content="2023-05-18T02:18:00.000Z">
+<meta property="article:modified_time" content="2023-05-18T03:25:58.262Z">
 <meta property="article:author" content="David Penn">
 <meta property="article:tag" content="JavaWeb">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://penndavid.github.io/img/JavaWeb/2/Filter1.png">
   
   
   
@@ -208,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-16 10:18" pubdate>
-          2023年5月16日 上午
+        <time datetime="2023-05-18 10:18" pubdate>
+          2023年5月18日 上午
         </time>
       </span>
     
@@ -220,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          56 字
+          2.9k 字
         
       </span>
     
@@ -231,7 +236,7 @@
         
         
         
-          1 分钟
+          25 分钟
         
       </span>
     
@@ -274,7 +279,27 @@
             
               <div class="markdown-body">
                 
-                <h1 id="JavaWeb-2"><a href="#JavaWeb-2" class="headerlink" title="JavaWeb_2"></a>JavaWeb_2</h1><h2 id="八、Filter"><a href="#八、Filter" class="headerlink" title="八、Filter"></a>八、Filter</h2><h2 id="九、Listener"><a href="#九、Listener" class="headerlink" title="九、Listener"></a>九、Listener</h2><h2 id="十、AJAX"><a href="#十、AJAX" class="headerlink" title="十、AJAX"></a>十、AJAX</h2><h2 id="十一、JSON"><a href="#十一、JSON" class="headerlink" title="十一、JSON"></a>十一、JSON</h2><h2 id="十二、Vue"><a href="#十二、Vue" class="headerlink" title="十二、Vue"></a>十二、Vue</h2><h2 id="十三、Element"><a href="#十三、Element" class="headerlink" title="十三、Element"></a>十三、Element</h2>
+                <h1 id="JavaWeb-2"><a href="#JavaWeb-2" class="headerlink" title="JavaWeb_2"></a>JavaWeb_2</h1><h2 id="八、Filter"><a href="#八、Filter" class="headerlink" title="八、Filter"></a>八、Filter</h2><p>概念：FiIter表示过滤器，是 JavaWeb三大组件(Servlet、Filter、Listener)之一<br>过滤器可以把对资源的请求拦截下来，从而实现一些特殊的功能。<br>过滤器一般完成一些通用的操作，比如：权限控制、统一编码处理、敏感字符处理等等</p>
+<p><img src="/img/JavaWeb/2/Filter1.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1、入门"><a href="#1、入门" class="headerlink" title="1、入门"></a>1、入门</h3><p>Filter类的案例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@WebFilter(&quot;/*&quot;)</span><br><span class="hljs-comment">//配置的拦截资源的路径</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * 拦截具体的资源：/index.jsp: 只有访问 index.jsp 时才会被拦截</span><br><span class="hljs-comment"> * 目录拦截：     /user/*   : 访问 /use 下的所有资源都会被拦截</span><br><span class="hljs-comment"> * 后缀名拦截：   *.jsp     : 访问后缀名为 jsp 的资源，都会被拦截</span><br><span class="hljs-comment"> * 拦截所有 ：    /*        : 访问所有资源，都会被拦截</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FilterDemo</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Filter</span> &#123;<br>    <span class="hljs-comment">//实现Filter接口，重写方法</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">(FilterConfig filterConfig)</span> <span class="hljs-keyword">throws</span> ServletException &#123;<br><br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="hljs-keyword">throws</span> IOException, ServletException &#123;<br>        <span class="hljs-comment">//放行前代码，一般对request数据进行处理</span><br>        System.out.println(<span class="hljs-string">&quot;1---FilterDemo doFilter---&quot;</span>);<br>        <span class="hljs-comment">//放行</span><br>        filterChain.doFilter(servletRequest,servletResponse);<br>        <span class="hljs-comment">//放行后会访问资源</span><br>        <span class="hljs-comment">//放行后代码，一般对response数据进行处理</span><br>        System.out.println(<span class="hljs-string">&quot;2---FilterDemo doFilter---&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">destroy</span><span class="hljs-params">()</span> &#123;<br><br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="2、Filter链"><a href="#2、Filter链" class="headerlink" title="2、Filter链"></a>2、Filter链</h3><p>多个Filter过滤器</p>
+<p>注解配置的 Filter，优先级按照过滤器类名（字符串）的自然排序</p>
+<p><img src="/img/JavaWeb/2/Filter2.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3、登录案例"><a href="#3、登录案例" class="headerlink" title="3、登录案例"></a>3、登录案例</h3><p><img src="/img/JavaWeb/2/Filter3.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@WebFilter(&quot;/*&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginFilter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Filter</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">(FilterConfig filterConfig)</span> <span class="hljs-keyword">throws</span> ServletException &#123;<br><br>    &#125;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="hljs-keyword">throws</span> IOException, ServletException &#123;<br>        <span class="hljs-type">HttpServletRequest</span> <span class="hljs-variable">httpreq</span> <span class="hljs-operator">=</span> (HttpServletRequest) servletRequest;<br>        <span class="hljs-comment">//0-1.排除登录相关资源</span><br>        String urls[] = &#123;<span class="hljs-string">&quot;login.jsp&quot;</span>,<span class="hljs-string">&quot;/loginServlet&quot;</span>,<span class="hljs-string">&quot;/css/&quot;</span>,<span class="hljs-string">&quot;/js/&quot;</span>,<span class="hljs-string">&quot;/fonts/&quot;</span>,<span class="hljs-string">&quot;/checkCodeServlet&quot;</span>&#125;;<br>        <span class="hljs-comment">//0-2.获取请求路径</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> httpreq.getRequestURI().toString();<br>        <span class="hljs-comment">//0-3.判断是否包含登录相关资源路径</span><br>        <span class="hljs-keyword">for</span> (String u : urls) &#123;<br>            <span class="hljs-keyword">if</span>(url.contains(u))&#123;<br>                <span class="hljs-comment">//包含，放行</span><br>                filterChain.doFilter(servletRequest,servletResponse);<br>                <span class="hljs-keyword">return</span>;<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-comment">//1.判断session中是否有登录用户信息</span><br>        <span class="hljs-type">HttpSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> httpreq.getSession();<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> session.getAttribute(<span class="hljs-string">&quot;user&quot;</span>);<br><br>        <span class="hljs-comment">//2.判断是否有登录信息</span><br>        <span class="hljs-keyword">if</span>(user == <span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-comment">//没有登录，跳转到登录页面</span><br>            httpreq.setAttribute(<span class="hljs-string">&quot;login_msg&quot;</span>,<span class="hljs-string">&quot;您尚未登录，请登录&quot;</span>);<br>            httpreq.getRequestDispatcher(<span class="hljs-string">&quot;/login.jsp&quot;</span>).forward(servletRequest,servletResponse);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-comment">//已经登录，放行</span><br>            filterChain.doFilter(servletRequest,servletResponse);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">destroy</span><span class="hljs-params">()</span> &#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="九、Listener"><a href="#九、Listener" class="headerlink" title="九、Listener"></a>九、Listener</h2><p>概念：Listener 表示监听器，是 JavaWeb 三大组件 (ServIets、FiIter、Listener) 之一</p>
+<p>监听器可以监听就是在application,session,request三个对象创建、销毁或者往其中添加修改删除属性时自动执行到代码的功能组件<br>Listener 分类： JavaWeb 中提供了 8 个监听器</p>
+<p><img src="/img/JavaWeb/2/Listener1.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ListenerDemo</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ServletContextListener</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">contextInitialized</span><span class="hljs-params">(ServletContextEvent servletContextEvent)</span> &#123;<br>        <span class="hljs-comment">//加载资源</span><br>        System.out.println(<span class="hljs-string">&quot;ListenerDemo contextInitialized...&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">contextDestroyed</span><span class="hljs-params">(ServletContextEvent servletContextEvent)</span> &#123;<br>        <span class="hljs-comment">//释放资源</span><br>        System.out.println(<span class="hljs-string">&quot;ListenerDemo contextDestroyed...&quot;</span>);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="十、AJAX"><a href="#十、AJAX" class="headerlink" title="十、AJAX"></a>十、AJAX</h2><h2 id="十一、JSON"><a href="#十一、JSON" class="headerlink" title="十一、JSON"></a>十一、JSON</h2><h2 id="十二、Vue"><a href="#十二、Vue" class="headerlink" title="十二、Vue"></a>十二、Vue</h2><h2 id="十三、Element"><a href="#十三、Element" class="headerlink" title="十三、Element"></a>十三、Element</h2>
                 
               </div>
             
@@ -327,7 +352,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>JavaWeb基础2</div>
-      <div>https://penndavid.github.io/2023/05/16/JavaWeb_2/</div>
+      <div>https://penndavid.github.io/2023/05/18/JavaWeb_2/</div>
     </div>
     <div class="license-meta">
       
@@ -339,7 +364,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月16日</div>
+          <div>2023年5月18日</div>
         </div>
       
       
@@ -371,18 +396,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/16/JavaWeb_1/" title="JavaWeb基础1">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JavaWeb基础1</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/02/Java-Web-Start/" title="Java Web 学习">
-                        <span class="hidden-mobile">Java Web 学习</span>
+                      <a href="/2023/05/17/JWProject-1/" title="JavaWeb项目实践1">
+                        <span class="hidden-mobile">JavaWeb项目实践1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
