@@ -16,34 +16,34 @@
   <meta name="author" content="David Penn">
   <meta name="keywords" content="Blog">
   
-    <meta name="description" content="L3tS4fe战队WRITEUP一、 战队信息战队名称：L3tS4fe 战队排名：700 二、 解题情况 三、解题过程题目序号 题目名称 unziplinux下建立一个软连接文件指向&#x2F;var&#x2F;www&#x2F;html，这作为第一个zip文件压缩。 第二个压缩包，先创建一个test目录，在test目录下写一个shell文件cmd.php，此时压缩包目录架构是：test&#x2F;cmd.php 访问cmd.php，输">
+    <meta name="description" content="L3tS4fe战队WRITEUP一、 战队信息战队名称：L3tS4fe 战队排名：700 二、 解题情况 三、解题过程unziplinux下建立一个软连接文件指向&#x2F;var&#x2F;www&#x2F;html，这作为第一个zip文件压缩。 第二个压缩包，先创建一个test目录，在test目录下写一个shell文件cmd.php，此时压缩包目录架构是：test&#x2F;cmd.php 访问cmd.php，输入执行的指令，获得f">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DavidPenn 的博客">
-<meta property="og:url" content="https://penndavid.github.io/2023/05/28/CTF_com_1/index.html">
+<meta property="og:title" content="CTF国赛-L3tS4fe战队WRITEUP">
+<meta property="og:url" content="https://penndavid.github.io/2023/05/16/CTF_com_1/index.html">
 <meta property="og:site_name" content="DavidPenn 的博客">
-<meta property="og:description" content="L3tS4fe战队WRITEUP一、 战队信息战队名称：L3tS4fe 战队排名：700 二、 解题情况 三、解题过程题目序号 题目名称 unziplinux下建立一个软连接文件指向&#x2F;var&#x2F;www&#x2F;html，这作为第一个zip文件压缩。 第二个压缩包，先创建一个test目录，在test目录下写一个shell文件cmd.php，此时压缩包目录架构是：test&#x2F;cmd.php 访问cmd.php，输">
+<meta property="og:description" content="L3tS4fe战队WRITEUP一、 战队信息战队名称：L3tS4fe 战队排名：700 二、 解题情况 三、解题过程unziplinux下建立一个软连接文件指向&#x2F;var&#x2F;www&#x2F;html，这作为第一个zip文件压缩。 第二个压缩包，先创建一个test目录，在test目录下写一个shell文件cmd.php，此时压缩包目录架构是：test&#x2F;cmd.php 访问cmd.php，输入执行的指令，获得f">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic1.imgdb.cn/item/647319e4f024cca1738d9ecd.png">
 <meta property="og:image" content="https://pic1.imgdb.cn/item/64731bd1f024cca1738f813d.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262667988-de9d35df-88bf-433a-b415-1d2691f1ff62.png#averageHue=%23102f76&clientId=uaaa981b6-3013-4&from=paste&height=268&id=u7cd563f7&originHeight=499&originWidth=774&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=154446&status=done&style=none&taskId=u82836fc4-15da-41a5-aca1-f9524dd366c&title=&width=415.20001220703125">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262730503-90bbc39c-9a10-4759-a1d7-308302cb8f50.png#averageHue=%23e1bb7a&clientId=uaaa981b6-3013-4&from=paste&height=95&id=u90ee822c&originHeight=119&originWidth=1076&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=13201&status=done&style=none&taskId=u45ee25d9-0b26-4b5f-9fc2-1cffc45bc51&title=&width=860.8">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262802463-9255bd90-b6ed-46a4-ad50-fa05873d65b3.png#averageHue=%23f6f4f2&clientId=uaaa981b6-3013-4&from=paste&height=72&id=u1df141cb&originHeight=90&originWidth=797&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=6767&status=done&style=none&taskId=u9938b21a-2f3b-47c8-a59f-1b0aa9400f5&title=&width=637.6">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263043049-99120086-252c-41fd-8cb8-97f08b1b6b5d.png#averageHue=%23f6f4f2&clientId=uaaa981b6-3013-4&from=paste&height=67&id=u0a937546&originHeight=84&originWidth=989&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=8065&status=done&style=none&taskId=u466172ad-2125-49e3-82b6-0592c841287&title=&width=791.2">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262903730-353b42bf-0677-47e5-a078-d95657a44408.png#averageHue=%23ddbb86&clientId=uaaa981b6-3013-4&from=paste&height=81&id=uc3107170&originHeight=101&originWidth=980&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=11091&status=done&style=none&taskId=ue73e0737-e1b0-48e4-be4c-3886d36631a&title=&width=784">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262892437-91c7a1f9-57a4-4d10-abe9-18941619b371.png#averageHue=%23eeeeee&clientId=uaaa981b6-3013-4&from=paste&height=267&id=u67702947&originHeight=334&originWidth=739&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=14702&status=done&style=none&taskId=u66b4340e-7d8b-4396-bab3-91ca23342b3&title=&width=591.2">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263211810-2f29ad78-23cc-496f-8d00-46a197708a59.png#averageHue=%23f4f4f4&clientId=uaaa981b6-3013-4&from=paste&height=411&id=u4df50bab&originHeight=715&originWidth=922&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=43294&status=done&style=none&taskId=ufd943faf-7639-4540-819e-79baa0a44d5&title=&width=530.6000366210938">
-<meta property="og:image" content="file:///C:/Users/29966/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262667988-de9d35df-88bf-433a-b415-1d2691f1ff62.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262730503-90bbc39c-9a10-4759-a1d7-308302cb8f50.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262802463-9255bd90-b6ed-46a4-ad50-fa05873d65b3.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263043049-99120086-252c-41fd-8cb8-97f08b1b6b5d.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262903730-353b42bf-0677-47e5-a078-d95657a44408.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262892437-91c7a1f9-57a4-4d10-abe9-18941619b371.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263211810-2f29ad78-23cc-496f-8d00-46a197708a59.png">
+<meta property="og:image" content="https://penndavid.github.io/2023/05/16/CTF_com_1/img/CTF/com_1/clip_image002.png">
 <meta property="og:image" content="https://pic1.imgdb.cn/item/64731a6ef024cca1738e263b.png">
-<meta property="article:published_time" content="2023-05-28T08:37:30.955Z">
-<meta property="article:modified_time" content="2023-05-28T09:16:14.996Z">
+<meta property="article:published_time" content="2023-05-16T07:17:00.000Z">
+<meta property="article:modified_time" content="2023-05-29T04:29:13.620Z">
 <meta property="article:author" content="David Penn">
-<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://pic1.imgdb.cn/item/647319e4f024cca1738d9ecd.png">
   
   
   
-  <title>DavidPenn 的博客</title>
+  <title>CTF国赛-L3tS4fe战队WRITEUP - DavidPenn 的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -209,7 +209,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="CTF国赛-L3tS4fe战队WRITEUP"></span>
           
         </div>
 
@@ -220,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-28 16:37" pubdate>
-          2023年5月28日 下午
+        <time datetime="2023-05-16 15:17" pubdate>
+          2023年5月16日 下午
         </time>
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          10 分钟
+          9 分钟
         
       </span>
     
@@ -281,7 +281,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">CTF国赛-L3tS4fe战队WRITEUP</h1>
             
             
               <div class="markdown-body">
@@ -289,8 +289,7 @@
                 <h1 id="L3tS4fe战队WRITEUP"><a href="#L3tS4fe战队WRITEUP" class="headerlink" title="L3tS4fe战队WRITEUP"></a>L3tS4fe战队WRITEUP</h1><h2 id="一、-战队信息"><a href="#一、-战队信息" class="headerlink" title="一、 战队信息"></a>一、 战队信息</h2><p>战队名称：L3tS4fe</p>
 <p>战队排名：700</p>
 <h2 id="二、-解题情况"><a href="#二、-解题情况" class="headerlink" title="二、 解题情况"></a>二、 解题情况</h2><p><img src="https://pic1.imgdb.cn/item/647319e4f024cca1738d9ecd.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="三、解题过程"><a href="#三、解题过程" class="headerlink" title="三、解题过程"></a>三、解题过程</h2><p>题目序号 题目名称</p>
-<h3 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h3><p>linux下建立一个软连接文件指向/var/www/html，这作为第一个zip文件压缩。</p>
+<h2 id="三、解题过程"><a href="#三、解题过程" class="headerlink" title="三、解题过程"></a>三、解题过程</h2><h3 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h3><p>linux下建立一个软连接文件指向/var/www/html，这作为第一个zip文件压缩。</p>
 <p>第二个压缩包，先创建一个test目录，在test目录下写一个shell文件cmd.php，此时压缩包目录架构是：test/cmd.php</p>
 <p>访问cmd.php，输入执行的指令，获得flag</p>
 <h3 id="签到卡"><a href="#签到卡" class="headerlink" title="签到卡"></a>签到卡</h3><p>输入指令print(open(‘/flag’).read())</p>
@@ -305,17 +304,16 @@
 <p>flag{12307bbf-9e91-4e61-a900-dd26a6d0ea4c}</p>
 <h3 id="被加密的生产流量"><a href="#被加密的生产流量" class="headerlink" title="被加密的生产流量"></a>被加密的生产流量</h3><p>在流量中找到一串前面相同，最后2位不同的字符，发现最后以=结束，将其全部连接起来，用base16解析，成功获得flag</p>
 <p><img src="https://pic1.imgdb.cn/item/64731bd1f024cca1738f813d.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="dumpit"><a href="#dumpit" class="headerlink" title="dumpit"></a>dumpit</h3><p><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262667988-de9d35df-88bf-433a-b415-1d2691f1ff62.png#averageHue=%23102f76&clientId=uaaa981b6-3013-4&from=paste&height=268&id=u7cd563f7&originHeight=499&originWidth=774&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=154446&status=done&style=none&taskId=u82836fc4-15da-41a5-aca1-f9524dd366c&title=&width=415.20001220703125" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262730503-90bbc39c-9a10-4759-a1d7-308302cb8f50.png#averageHue=%23e1bb7a&clientId=uaaa981b6-3013-4&from=paste&height=95&id=u90ee822c&originHeight=119&originWidth=1076&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=13201&status=done&style=none&taskId=u45ee25d9-0b26-4b5f-9fc2-1cffc45bc51&title=&width=860.8" srcset="/img/loading.gif" lazyload alt="image.png"><br>看到ctf数据库和flag1表，查查看<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262802463-9255bd90-b6ed-46a4-ad50-fa05873d65b3.png#averageHue=%23f6f4f2&clientId=uaaa981b6-3013-4&from=paste&height=72&id=u1df141cb&originHeight=90&originWidth=797&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=6767&status=done&style=none&taskId=u9938b21a-2f3b-47c8-a59f-1b0aa9400f5&title=&width=637.6" srcset="/img/loading.gif" lazyload alt="image.png"><br>fake_flag<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263043049-99120086-252c-41fd-8cb8-97f08b1b6b5d.png#averageHue=%23f6f4f2&clientId=uaaa981b6-3013-4&from=paste&height=67&id=u0a937546&originHeight=84&originWidth=989&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=8065&status=done&style=none&taskId=u466172ad-2125-49e3-82b6-0592c841287&title=&width=791.2" srcset="/img/loading.gif" lazyload alt="image.png"><br>不在mysql里</p>
-<p>于是看打印出来的日志<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262903730-353b42bf-0677-47e5-a078-d95657a44408.png#averageHue=%23ddbb86&clientId=uaaa981b6-3013-4&from=paste&height=81&id=uc3107170&originHeight=101&originWidth=980&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=11091&status=done&style=none&taskId=ue73e0737-e1b0-48e4-be4c-3886d36631a&title=&width=784" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262892437-91c7a1f9-57a4-4d10-abe9-18941619b371.png#averageHue=%23eeeeee&clientId=uaaa981b6-3013-4&from=paste&height=267&id=u67702947&originHeight=334&originWidth=739&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=14702&status=done&style=none&taskId=u66b4340e-7d8b-4396-bab3-91ca23342b3&title=&width=591.2" srcset="/img/loading.gif" lazyload alt="image.png"><br>没发现什么有用的信息<br>但题目是dumpit，应该就在里面找<br>试了半天想到docker的env可能有没删除的flag，于是<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263211810-2f29ad78-23cc-496f-8d00-46a197708a59.png#averageHue=%23f4f4f4&clientId=uaaa981b6-3013-4&from=paste&height=411&id=u4df50bab&originHeight=715&originWidth=922&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=43294&status=done&style=none&taskId=ufd943faf-7639-4540-819e-79baa0a44d5&title=&width=530.6000366210938" srcset="/img/loading.gif" lazyload alt="image.png"><br>找到flag（这应该是非预期解，预期解是命令执行吧。。。）</p>
-<p>Sign_in_passwd</p>
-<p>首先打开文件得到</p>
-<p><img src="file:///C:/Users/29966/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="dumpit"><a href="#dumpit" class="headerlink" title="dumpit"></a>dumpit</h3><p><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262667988-de9d35df-88bf-433a-b415-1d2691f1ff62.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262730503-90bbc39c-9a10-4759-a1d7-308302cb8f50.png" srcset="/img/loading.gif" lazyload><br>看到ctf数据库和flag1表，查查看<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262802463-9255bd90-b6ed-46a4-ad50-fa05873d65b3.png" srcset="/img/loading.gif" lazyload><br>fake_flag<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263043049-99120086-252c-41fd-8cb8-97f08b1b6b5d.png" srcset="/img/loading.gif" lazyload><br>不在mysql里</p>
+<p>于是看打印出来的日志<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262903730-353b42bf-0677-47e5-a078-d95657a44408.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685262892437-91c7a1f9-57a4-4d10-abe9-18941619b371.png" srcset="/img/loading.gif" lazyload><br>没发现什么有用的信息<br>但题目是dumpit，应该就在里面找<br>试了半天想到docker的env可能有没删除的flag，于是<br><img src="https://cdn.nlark.com/yuque/0/2023/png/33727192/1685263211810-2f29ad78-23cc-496f-8d00-46a197708a59.png" srcset="/img/loading.gif" lazyload><br>找到flag（这应该是非预期解，预期解是命令执行吧。。。)</p>
+<h3 id="Sign-in-passwd"><a href="#Sign-in-passwd" class="headerlink" title="Sign_in_passwd"></a>Sign_in_passwd</h3><p>首先打开文件得到</p>
+<p><img src="./img/CTF/com_1/clip_image002.png" srcset="/img/loading.gif" lazyload></p>
 <p>猜测第一行是base64加密，但解出来不对，所以猜测是换表加密，第二行是url加密，解密第二行得到</p>
 <p>GHI3KLMNJOPQRSTUb=cdefghijklmnopWXYZ/12+406789VaqrstuvwxyzABCDEF5</p>
 <p>换表解密得到flag</p>
-<p><img src="https://pic1.imgdb.cn/item/64731a6ef024cca1738e263b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://pic1.imgdb.cn/item/64731a6ef024cca1738e263b.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -324,6 +322,41 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CTF/WriteUp/" class="category-chain-item">WriteUp</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/">#CTF</a>
+      
+    </div>
   
 </div>
 
@@ -333,8 +366,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>https://penndavid.github.io/2023/05/28/CTF_com_1/</div>
+      <div>CTF国赛-L3tS4fe战队WRITEUP</div>
+      <div>https://penndavid.github.io/2023/05/16/CTF_com_1/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +379,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月28日</div>
+          <div>2023年5月16日</div>
         </div>
       
       
@@ -378,12 +411,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/05/18/JavaWeb_1_2/" title="JavaWeb基础1-2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaWeb基础1-2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/25/Git_1/" title="Git知识与使用-1">
-                        <span class="hidden-mobile">Git知识与使用-1</span>
+                      <a href="/2023/05/16/JavaWeb_1_1/" title="JavaWeb基础1-1">
+                        <span class="hidden-mobile">JavaWeb基础1-1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
