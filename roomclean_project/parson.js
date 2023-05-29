@@ -1,5 +1,5 @@
 if (location.pathname == '/2023/04/27/CleanRoomProject/') {
-    // //    仅设定的页面需要执行的代码
+    // 仅设定的页面需要执行的代码
 
     // 日期字符串
     const startDateString = '2023-04-26';
@@ -16,7 +16,7 @@ if (location.pathname == '/2023/04/27/CleanRoomProject/') {
     // 将毫秒数转换为天数
     const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
-    // // 计算天数除以6的余数
+    // 计算天数除以6的余数
     const remainder = dayDiff % 6;
 
     var result = "出错了，请联系网站管理员";
