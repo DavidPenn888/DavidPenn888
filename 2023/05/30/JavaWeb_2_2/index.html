@@ -16,23 +16,26 @@
   <meta name="author" content="David Penn">
   <meta name="keywords" content="Blog">
   
-    <meta name="description" content="2305-实用小技巧11、建立文件夹映射1mklink &#x2F;d &quot;C:&#x2F;A&quot; &quot;C:&#x2F;B&#x2F;A&quot;  第一个：(eg: C:&#x2F;A)：要建立映射的地址（会在资源管理器创建&#x2F;显示一个文件夹） 第二个：(eg: C:&#x2F;B&#x2F;A)：映射到的文件夹地址 注意：必须加”” 相关知识链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_52102933&#x2F;article&#x2F;deta">
+    <meta name="description" content="JavaWeb基础2-2六、Interceptor1、概念概念：是一种动态拦截方法调用的机制，类似于过滤器。Spring框架中提供的，用来动态拦截控制器方法的执行。作用：拦截请求,在指定的方法调用前后，根据业务需要执行预先设定的代码。  1.定义拦截器，实现HandlerInterceptor接口， 并重写其所有方法。 2.注册拦截器 123456@Override &#x2F;&#x2F; 目标资源方法执行前执行，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2305-实用小技巧1">
-<meta property="og:url" content="https://penndavid.github.io/2023/05/19/2305-tip1/index.html">
+<meta property="og:title" content="JavaWeb基础2-1">
+<meta property="og:url" content="https://penndavid.github.io/2023/05/30/JavaWeb_2_2/index.html">
 <meta property="og:site_name" content="DavidPenn 的博客">
-<meta property="og:description" content="2305-实用小技巧11、建立文件夹映射1mklink &#x2F;d &quot;C:&#x2F;A&quot; &quot;C:&#x2F;B&#x2F;A&quot;  第一个：(eg: C:&#x2F;A)：要建立映射的地址（会在资源管理器创建&#x2F;显示一个文件夹） 第二个：(eg: C:&#x2F;B&#x2F;A)：映射到的文件夹地址 注意：必须加”” 相关知识链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_52102933&#x2F;article&#x2F;deta">
+<meta property="og:description" content="JavaWeb基础2-2六、Interceptor1、概念概念：是一种动态拦截方法调用的机制，类似于过滤器。Spring框架中提供的，用来动态拦截控制器方法的执行。作用：拦截请求,在指定的方法调用前后，根据业务需要执行预先设定的代码。  1.定义拦截器，实现HandlerInterceptor接口， 并重写其所有方法。 2.注册拦截器 123456@Override &#x2F;&#x2F; 目标资源方法执行前执行，">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-19T06:34:37.000Z">
-<meta property="article:modified_time" content="2023-05-30T13:05:15.151Z">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/1.png">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/2.png">
+<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/3.png">
+<meta property="article:published_time" content="2023-05-30T10:03:55.000Z">
+<meta property="article:modified_time" content="2023-05-31T07:59:19.342Z">
 <meta property="article:author" content="David Penn">
-<meta property="article:tag" content="Tips">
-<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="JavaWeb">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://penndavid.github.io/img/JavaWeb/2-2/1.png">
   
   
   
-  <title>2305-实用小技巧1 - DavidPenn 的博客</title>
+  <title>JavaWeb基础2-1 - DavidPenn 的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="2305-实用小技巧1"></span>
+            <span id="subtitle" data-typed-text="JavaWeb基础2-1"></span>
           
         </div>
 
@@ -209,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-19 14:34" pubdate>
-          2023年5月19日 下午
+        <time datetime="2023-05-30 18:03" pubdate>
+          2023年5月30日 晚上
         </time>
       </span>
     
@@ -221,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          203 字
+          2.4k 字
         
       </span>
     
@@ -232,7 +235,7 @@
         
         
         
-          2 分钟
+          20 分钟
         
       </span>
     
@@ -270,18 +273,33 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">2305-实用小技巧1</h1>
+            <h1 style="display: none">JavaWeb基础2-1</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="2305-实用小技巧1"><a href="#2305-实用小技巧1" class="headerlink" title="2305-实用小技巧1"></a>2305-实用小技巧1</h1><h2 id="1、建立文件夹映射"><a href="#1、建立文件夹映射" class="headerlink" title="1、建立文件夹映射"></a>1、建立文件夹映射</h2><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">mklink /d &quot;C:/A&quot; &quot;C:/B/A&quot;<br></code></pre></td></tr></table></figure>
+                <h1 id="JavaWeb基础2-2"><a href="#JavaWeb基础2-2" class="headerlink" title="JavaWeb基础2-2"></a>JavaWeb基础2-2</h1><h2 id="六、Interceptor"><a href="#六、Interceptor" class="headerlink" title="六、Interceptor"></a>六、Interceptor</h2><h3 id="1、概念"><a href="#1、概念" class="headerlink" title="1、概念"></a>1、概念</h3><p>概念：是一种动态拦截方法调用的机制，类似于过滤器。Spring框架中提供的，用来动态拦截控制器方法的执行。<br>作用：拦截请求,在指定的方法调用前后，根据业务需要执行预先设定的代码。</p>
+<p><img src="/img/JavaWeb/2-2/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>1.定义拦截器，实现HandlerInterceptor接口， 并重写其所有方法。</p>
+<p>2.注册拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span> <span class="hljs-comment">// 目标资源方法执行前执行，放回true:放行，返回false: 不放行</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> preHandle<br><span class="hljs-meta">@Override</span> <span class="hljs-comment">// 目标资源方法执行后执行</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> postHandle<br><span class="hljs-meta">@Override</span> <span class="hljs-comment">//视图渲染完毕后执行，最后执行</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> afterCompletion <br></code></pre></td></tr></table></figure>
 
-<p>第一个：(eg: C:/A)：要建立映射的地址（会在资源管理器创建/显示一个文件夹）</p>
-<p>第二个：(eg: C:/B/A)：映射到的文件夹地址</p>
-<p>注意：必须加””</p>
-<p>相关知识链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52102933/article/details/126792094">https://blog.csdn.net/qq_52102933/article/details/126792094</a></p>
+<p>3.交给AOP容器管理，加上@component</p>
+<h3 id="2、入门"><a href="#2、入门" class="headerlink" title="2、入门"></a>2、入门</h3><ol>
+<li>定义拦截器，实现HandlerInterceptor接口， 并重写其所有方法。</li>
+<li>注册拦截器</li>
+</ol>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">@Slf4j<br>@Component<br>public <span class="hljs-keyword">class</span> LoginCheckInterceptor implements HandlerInterceptor &#123;<br>    @Override <span class="hljs-comment">//目标资源方法运行前运行, 返回true: 放行, 放回false, 不放行</span><br>    public boolean pre<span class="hljs-constructor">Handle(HttpServletRequest <span class="hljs-params">req</span>, HttpServletResponse <span class="hljs-params">resp</span>, Object <span class="hljs-params">handler</span>)</span> throws Exception &#123;<br>        <span class="hljs-comment">//1.获取请求url。</span><br>        String url = req.get<span class="hljs-constructor">RequestURL()</span>.<span class="hljs-keyword">to</span><span class="hljs-constructor">String()</span>;<br>        log.info(<span class="hljs-string">&quot;请求的url: &#123;&#125;&quot;</span>,url);<br><br>        <span class="hljs-comment">//2.判断请求url中是否包含login，如果包含，说明是登录操作，放行。</span><br>        <span class="hljs-keyword">if</span>(url.contains(<span class="hljs-string">&quot;login&quot;</span>))&#123;<br>            log.info(<span class="hljs-string">&quot;登录操作, 放行...&quot;</span>);<br>            return <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-comment">//3.获取请求头中的令牌（token）。</span><br>        String jwt = req.get<span class="hljs-constructor">Header(<span class="hljs-string">&quot;token&quot;</span>)</span>;<br><br>        <span class="hljs-comment">//4.判断令牌是否存在，如果不存在，返回错误结果（未登录）。</span><br>        <span class="hljs-keyword">if</span>(!<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">StringUtils</span>.</span></span>has<span class="hljs-constructor">Length(<span class="hljs-params">jwt</span>)</span>)&#123;<br>            log.info(<span class="hljs-string">&quot;请求头token为空,返回未登录的信息&quot;</span>);<br>            Result error = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Result</span>.</span></span>error(<span class="hljs-string">&quot;NOT_LOGIN&quot;</span>);<br>            <span class="hljs-comment">//手动转换 对象--json --------&gt; 阿里巴巴fastJSON</span><br>            String notLogin = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">JSONObject</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">JSONString(<span class="hljs-params">error</span>)</span>;<br>            resp.get<span class="hljs-constructor">Writer()</span>.write(notLogin);<br>            return <span class="hljs-literal">false</span>;<br>        &#125;<br><br>        <span class="hljs-comment">//5.解析token，如果解析失败，返回错误结果（未登录）。</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">JwtUtils</span>.</span></span>parse<span class="hljs-constructor">JWT(<span class="hljs-params">jwt</span>)</span>;<br>        &#125; catch (Exception e) &#123;<span class="hljs-comment">//jwt解析失败</span><br>            e.print<span class="hljs-constructor">StackTrace()</span>;<br>            log.info(<span class="hljs-string">&quot;解析令牌失败, 返回未登录错误信息&quot;</span>);<br>            Result error = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Result</span>.</span></span>error(<span class="hljs-string">&quot;NOT_LOGIN&quot;</span>);<br>            <span class="hljs-comment">//手动转换 对象--json --------&gt; 阿里巴巴fastJSON</span><br>            String notLogin = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">JSONObject</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">JSONString(<span class="hljs-params">error</span>)</span>;<br>            resp.get<span class="hljs-constructor">Writer()</span>.write(notLogin);<br>            return <span class="hljs-literal">false</span>;<br>        &#125;<br><br>        <span class="hljs-comment">//6.放行。</span><br>        log.info(<span class="hljs-string">&quot;令牌合法, 放行&quot;</span>);<br>        return <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    @Override <span class="hljs-comment">//目标资源方法运行后运行</span><br>    public void post<span class="hljs-constructor">Handle(HttpServletRequest <span class="hljs-params">request</span>, HttpServletResponse <span class="hljs-params">response</span>, Object <span class="hljs-params">handler</span>, ModelAndView <span class="hljs-params">modelAndView</span>)</span> throws Exception &#123;<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;postHandle ...&quot;</span>);<br>    &#125;<br><br>    @Override <span class="hljs-comment">//视图渲染完毕后运行, 最后运行</span><br>    public void after<span class="hljs-constructor">Completion(HttpServletRequest <span class="hljs-params">request</span>, HttpServletResponse <span class="hljs-params">response</span>, Object <span class="hljs-params">handler</span>, Exception <span class="hljs-params">ex</span>)</span> throws Exception &#123;<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;afterCompletion...&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>3.拦截器-拦截路径</p>
+<p>拦截器可以根据需求，配置不同的拦截路径:</p>
+<p><img src="/img/JavaWeb/2-2/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>4.执行流程</p>
+<p><img src="/img/JavaWeb/2-2/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>5.Filter与Interceptor：</p>
+<p>接口规范不同：过滤器需要实现Filter接口，而拦截器需要实现HandleaInterceptor接口。</p>
+<p>拦截范围不同：过滤器Filter会拦截所有的资源，而Interceptor只 会拦截Spring环境中的资源。</p>
+<h3 id="3、登录校验案例"><a href="#3、登录校验案例" class="headerlink" title="3、登录校验案例"></a>3、登录校验案例</h3><h2 id="七、事务管理"><a href="#七、事务管理" class="headerlink" title="七、事务管理"></a>七、事务管理</h2><h2 id="八、AOP"><a href="#八、AOP" class="headerlink" title="八、AOP"></a>八、AOP</h2><h2 id="九、SpringBoot原理与Bean管理"><a href="#九、SpringBoot原理与Bean管理" class="headerlink" title="九、SpringBoot原理与Bean管理"></a>九、SpringBoot原理与Bean管理</h2><h2 id="十、Maven高级"><a href="#十、Maven高级" class="headerlink" title="十、Maven高级"></a>十、Maven高级</h2>
                 
               </div>
             
@@ -299,12 +317,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Tips/" class="category-chain-item">Tips</a>
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
   
   
     <span>></span>
     
-  <a href="/categories/Tips/Windows/" class="category-chain-item">Windows</a>
+  <a href="/categories/Java/JavaWeb/" class="category-chain-item">JavaWeb</a>
   
   
 
@@ -321,9 +339,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Tips/">#Tips</a>
-      
-        <a href="/tags/Windows/">#Windows</a>
+        <a href="/tags/JavaWeb/">#JavaWeb</a>
       
     </div>
   
@@ -335,8 +351,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>2305-实用小技巧1</div>
-      <div>https://penndavid.github.io/2023/05/19/2305-tip1/</div>
+      <div>JavaWeb基础2-1</div>
+      <div>https://penndavid.github.io/2023/05/30/JavaWeb_2_2/</div>
     </div>
     <div class="license-meta">
       
@@ -348,7 +364,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月19日</div>
+          <div>2023年5月30日</div>
         </div>
       
       
@@ -380,9 +396,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/21/JavaWeb_1_3/" title="JavaWeb基础1-项目实践1">
+                      <a href="/2023/05/31/JavaWeb_Maven_1/" title="JavaWeb_Maven仓库合集_1">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JavaWeb基础1-项目实践1</span>
+                        <span class="hidden-mobile">JavaWeb_Maven仓库合集_1</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -390,8 +406,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/18/JavaWeb_1_2/" title="JavaWeb基础1-2">
-                        <span class="hidden-mobile">JavaWeb基础1-2</span>
+                      <a href="/2023/05/29/JavaWeb_2_1/" title="JavaWeb基础2-1">
+                        <span class="hidden-mobile">JavaWeb基础2-1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
