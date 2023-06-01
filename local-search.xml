@@ -31,7 +31,7 @@
   
   
   <entry>
-    <title>JavaWeb基础2-1</title>
+    <title>JavaWeb基础2-2</title>
     <link href="/2023/05/30/JavaWeb_2_2/"/>
     <url>/2023/05/30/JavaWeb_2_2/</url>
     
@@ -350,13 +350,13 @@
     
     <categories>
       
-      <category>Hexo</category>
-      
       <category>CTF</category>
       
-      <category>Study</category>
-      
       <category>Web</category>
+      
+      <category>Hexo</category>
+      
+      <category>Study</category>
       
     </categories>
     
