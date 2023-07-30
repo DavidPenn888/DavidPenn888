@@ -19,29 +19,32 @@
     <meta name="description" content="JavaWeb基础2-2六、Interceptor1、概念概念：是一种动态拦截方法调用的机制，类似于过滤器。Spring框架中提供的，用来动态拦截控制器方法的执行。作用：拦截请求,在指定的方法调用前后，根据业务需要执行预先设定的代码。  1.定义拦截器，实现HandlerInterceptor接口， 并重写其所有方法。 2.注册拦截器 123456@Override &#x2F;&#x2F; 目标资源方法执行前执行，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaWeb基础2-2">
-<meta property="og:url" content="https://penndavid.github.io/2023/05/30/JavaWeb_2_2/index.html">
+<meta property="og:url" content="https://davidpenn888.github.io/2023/05/30/JavaWeb_2_2/index.html">
 <meta property="og:site_name" content="DavidPenn 的博客">
 <meta property="og:description" content="JavaWeb基础2-2六、Interceptor1、概念概念：是一种动态拦截方法调用的机制，类似于过滤器。Spring框架中提供的，用来动态拦截控制器方法的执行。作用：拦截请求,在指定的方法调用前后，根据业务需要执行预先设定的代码。  1.定义拦截器，实现HandlerInterceptor接口， 并重写其所有方法。 2.注册拦截器 123456@Override &#x2F;&#x2F; 目标资源方法执行前执行，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/1.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/2.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/3.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/4.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/5.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/6.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/7.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/8.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/9.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/10.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/11.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/12.png">
-<meta property="og:image" content="https://penndavid.github.io/img/JavaWeb/2-2/13.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/1.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/2.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/3.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/4.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/5.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/6.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/7.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/8.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/9.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/10.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/11.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/12.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/13.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/14.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/15.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/16.png">
 <meta property="article:published_time" content="2023-05-30T10:03:55.000Z">
-<meta property="article:modified_time" content="2023-06-06T13:07:35.556Z">
+<meta property="article:modified_time" content="2023-06-07T12:41:55.825Z">
 <meta property="article:author" content="David Penn">
 <meta property="article:tag" content="JavaWeb">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://penndavid.github.io/img/JavaWeb/2-2/1.png">
+<meta name="twitter:image" content="https://davidpenn888.github.io/img/JavaWeb/2-2/1.png">
   
   
   
@@ -83,7 +86,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"penndavid.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"davidpenn888.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -234,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          15k 字
         
       </span>
     
@@ -245,7 +248,7 @@
         
         
         
-          103 分钟
+          124 分钟
         
       </span>
     
@@ -531,13 +534,61 @@
 <p>直接定义到启动类当中（不建议）：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringbootWebConfig2App1ication</span> &#123;<br>    <span class="hljs-meta">@Bean</span><span class="hljs-comment">//将方法返回值交给IOC容器管理，成为IOC容器的bean对象</span><br>    <span class="hljs-keyword">public</span> SAXReader <span class="hljs-title function_">saxReader</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SAXReader</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>配置到方法中：（加注释）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><span class="hljs-comment">//配置类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CommonConfig</span> &#123;<br>	<span class="hljs-meta">@Bean</span><br>	<span class="hljs-keyword">public</span> SAXReader <span class="hljs-title function_">saxReader</span><span class="hljs-params">()</span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SAXReader</span>() ;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>@Bean注释：</p>
+<p>将当前方法的返回值对象交给IOC容器管理, 成为IOC容器bean</p>
+<p>通过@Bean注解的name/value属性指定bean名称, 如果未指定, 默认是方法名</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testGetBean2</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">Object</span> <span class="hljs-variable">saxReader</span> <span class="hljs-operator">=</span> applicationContext.getBean(<span class="hljs-string">&quot;reader&quot;</span>);<br>    <span class="hljs-comment">//&quot;&quot;内，默认是方法名</span><br>    System.out.println(saxReader);<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CommonConfig</span> &#123;<br>	<span class="hljs-meta">@Bean</span><br>	<span class="hljs-keyword">public</span> SAXReader <span class="hljs-title function_">saxReader</span><span class="hljs-params">()</span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SAXReader</span>() ;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>需要依赖其他Bean对象，直接在方法中定义形参，容器会自动装配</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span> <span class="hljs-comment">//配置类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CommonConfig</span> &#123;<br>    <span class="hljs-comment">//声明第三方bean</span><br>    <span class="hljs-meta">@Bean</span> <span class="hljs-comment">//将当前方法的返回值对象交给IOC容器管理, 成为IOC容器bean</span><br>          <span class="hljs-comment">//通过@Bean注解的name/value属性指定bean名称, 如果未指定, 默认是方法名</span><br>    <span class="hljs-keyword">public</span> SAXReader <span class="hljs-title function_">reader</span><span class="hljs-params">(DeptService deptService)</span>&#123;<br>        System.out.println(deptService);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SAXReader</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>总结：</p>
+<p>通过@Bean注解的name或value属性’ 可以声明bean的名称，如果不指定,默认bean的名称就是方法名。</p>
+<p>如果第三方bean需要依赖其它bean对象，直接在bean定义方法中设置形参即可，容器会根据类型自动装配。</p>
+<p>问题思考：</p>
+<p>@Component及衍生注解与@Bean注解使用场景?</p>
+<p>项目中自定义的，使用@Component及其衍生注解</p>
+<p>项目中引入第三方的，使用@Bean注解</p>
+<h2 id="十、SpringBoot原理"><a href="#十、SpringBoot原理" class="headerlink" title="十、SpringBoot原理"></a>十、SpringBoot原理</h2><h3 id="1、Spring"><a href="#1、Spring" class="headerlink" title="1、Spring"></a>1、Spring</h3><p>Spring Framework框架：相对繁琐</p>
+<p>Spring Boot框架：相对方便</p>
+<p>原因：起步依赖（依赖传递）、自动配置</p>
+<h3 id="2、自动配置"><a href="#2、自动配置" class="headerlink" title="2、自动配置"></a>2、自动配置</h3><p>SpringBoot的自动配置就是当Spring容器启动后，一些配置类、bean对象就自动存入到了IOC容器中，不需要我们手动去声明，从而简化了开发，省去了繁琐的配置操作。</p>
+<p>自动配置原理</p>
+<p>方案一: @ComponentScan 组件扫描（使用繁琐，性能低）</p>
+<p>包扫描范围：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ComponentScan(&#123;&quot;com.example&quot;,&quot;com.itheima&quot;&#125;)</span> <span class="hljs-comment">//设置包扫描范围</span><br><span class="hljs-meta">@SpringBootApplication</span> <span class="hljs-comment">//默认只扫描当前包及其子包</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringbootWebConfig2Application</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(SpringbootWebConfig2Application.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p><img src="/img/JavaWeb/2-2/14.png" srcset="/img/loading.gif" lazyload></p>
+<p>方案二：@lmport 导入。使用@Import导入的类会被Spring加载到IOC容器中，导入形式主要有以下几种：</p>
+<ul>
+<li>导入普通类 </li>
+<li>导入配置类</li>
+<li>导入ImportSelector接口实现类</li>
+<li>@EnableXxxx注解，封装@Import注解(最方便)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Import(&#123;TokenParser.class, HeaderConfig.class&#125;)</span><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringbootWebConfig2Application</span> &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="十、SpringBoot原理"><a href="#十、SpringBoot原理" class="headerlink" title="十、SpringBoot原理"></a>十、SpringBoot原理</h2><h2 id="十、Maven高级"><a href="#十、Maven高级" class="headerlink" title="十、Maven高级"></a>十、Maven高级</h2>
+<h3 id="3、-Conditional"><a href="#3、-Conditional" class="headerlink" title="3、@Conditional"></a>3、@Conditional</h3><p>作用:按照- -定的条件进行判断，在满足给定条件后才会注册对应的bean对象到Spring I0C容器中。</p>
+<p>位置：方法、类</p>
+<ul>
+<li>@Conditional本身是一个父注解，派生出大量的子注解：</li>
+<li>@ConditionalOnClass：判断环境中是否有对应字节码文件，才注册bean到IOC容器。</li>
+<li>@ConditionalOnMissingBean：判断环境中没有对应的bean (类型或名称)，才注册bean到IOC容器。</li>
+<li>@ConditionalOnProperty：判断配置文件中有对应属性和值，才注册bean到IOC容器。</li>
+</ul>
+<p>举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@ConditionalOnClass(name = &quot;io.jsonwebtoken.Jwts&quot;)</span> <span class="hljs-comment">//环境中存在指定的这个类，才会将该bean加入IOC容器</span><br><br><span class="hljs-comment">//@ConditionalonClass (name = &quot;io.jsonwebtoken.Jwts&quot;) //环境中存在指定的这个类，才会将该bean加入IOC容器中</span><br><span class="hljs-comment">//@ConditionalOnMissingBean // 不存在该类型的bean,才松将该bean加入I0C容器中 ---指定类型(value属性) 或名称(name属性)</span><br><span class="hljs-comment">//@ConditionalonProperty(name = &quot;name&quot;, havingValue = &quot;itheima&quot;) //配置文件中存在指定的属性与值，才会将该bean加入IOC容器外</span><br><br>    <span class="hljs-keyword">public</span> HeaderParser <span class="hljs-title function_">headerParser</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HeaderParser</span>();<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/JavaWeb/2-2/15.png" srcset="/img/loading.gif" lazyload></p>
+<p>全部注册为IOC容器的bean??? NO!</p>
+<p>SpringBoot会根据@Conditional注解条件装配</p>
+<h3 id="4、自定义starter"><a href="#4、自定义starter" class="headerlink" title="4、自定义starter"></a>4、自定义starter</h3><p>在实际开发中，经常会定义-些公共组件,提供给各个项目团队使用。而在SpringBoot的项目中，一般会将这些公共组件封装为SpringBoot的starter。</p>
+<p><img src="/img/JavaWeb/2-2/16.png" srcset="/img/loading.gif" lazyload></p>
+<p>案例：<br>需求：自定义aliyun-oss-spring-boot-starter，完成阿里云OSS操作工具类AliyunOSSUtils 的自动配置。<br>目标：引入起步依赖引入之后,要想使用阿里云OSS，注入AliyunOSSUtils直接使用即可。</p>
+<h2 id="十一、Maven高级"><a href="#十一、Maven高级" class="headerlink" title="十一、Maven高级"></a>十一、Maven高级</h2>
                 
               </div>
             
@@ -590,7 +641,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>JavaWeb基础2-2</div>
-      <div>https://penndavid.github.io/2023/05/30/JavaWeb_2_2/</div>
+      <div>https://davidpenn888.github.io/2023/05/30/JavaWeb_2_2/</div>
     </div>
     <div class="license-meta">
       

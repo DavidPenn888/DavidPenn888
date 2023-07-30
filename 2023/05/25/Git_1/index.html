@@ -19,24 +19,24 @@
     <meta name="description" content="Git知识与使用-1一、Git基础知识1、Git的工作流程12345678Git是分布式版本控制系统（Distributed Version Control System，简称 DVCS），分为两种类型的仓库：本地仓库和远程仓库工作流程如下    1．从远程仓库中克隆或拉取代码到本地仓库(clone&#x2F;pull)    2．从本地进行代码修改    3．在提交前先将代码提交到暂存区    4．提交到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git知识与使用-1">
-<meta property="og:url" content="https://penndavid.github.io/2023/05/25/Git_1/index.html">
+<meta property="og:url" content="https://davidpenn888.github.io/2023/05/25/Git_1/index.html">
 <meta property="og:site_name" content="DavidPenn 的博客">
 <meta property="og:description" content="Git知识与使用-1一、Git基础知识1、Git的工作流程12345678Git是分布式版本控制系统（Distributed Version Control System，简称 DVCS），分为两种类型的仓库：本地仓库和远程仓库工作流程如下    1．从远程仓库中克隆或拉取代码到本地仓库(clone&#x2F;pull)    2．从本地进行代码修改    3．在提交前先将代码提交到暂存区    4．提交到">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/git.png">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/git%E6%B5%81%E7%A8%8B.png">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/git%E6%B5%81%E7%A8%8B_%E8%AF%A6%E8%A7%A3.png">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/1572173978185.png">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/1572174740013.png">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/1572520139221.png">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/1572520293700.png">
-<meta property="og:image" content="https://penndavid.github.io/img/Git/1/1572520396806.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/git.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/git%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/git%E6%B5%81%E7%A8%8B_%E8%AF%A6%E8%A7%A3.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/1572173978185.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/1572174740013.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/1572520139221.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/1572520293700.png">
+<meta property="og:image" content="https://davidpenn888.github.io/img/Git/1/1572520396806.png">
 <meta property="article:published_time" content="2023-05-25T13:29:22.000Z">
 <meta property="article:modified_time" content="2023-05-29T06:55:20.185Z">
 <meta property="article:author" content="David Penn">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://penndavid.github.io/img/Git/1/git.png">
+<meta name="twitter:image" content="https://davidpenn888.github.io/img/Git/1/git.png">
   
   
   
@@ -78,7 +78,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"penndavid.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"davidpenn888.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -400,7 +400,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Git知识与使用-1</div>
-      <div>https://penndavid.github.io/2023/05/25/Git_1/</div>
+      <div>https://davidpenn888.github.io/2023/05/25/Git_1/</div>
     </div>
     <div class="license-meta">
       
