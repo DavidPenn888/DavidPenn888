@@ -1,0 +1,785 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="David Penn">
+  <meta name="keywords" content="Blog">
+  
+    <meta name="description" content="#NSS2022新生赛##Web###funny_web随便输入一个用户名eg：admin，提示是实验室名字，输入尝试NSS，告知密码是QQ号，通过查询群管理QQ号，进入新页面，输入12345.1，获得flag。 ###奇妙的MD5通过网上查询知道，神奇的字符串是ffifdyop，F12查询线索知道md5绕过方法，输入x&#x3D;QNKCDZO&amp;y&#x3D;s878926199a绕过,最后通过a[]&#x3D;1&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF-NSS2022新生赛WriteUp">
+<meta property="og:url" content="https://davidpenn888.github.io/2023/09/12/CTF_competition_0/index.html">
+<meta property="og:site_name" content="DavidPenn 的博客">
+<meta property="og:description" content="#NSS2022新生赛##Web###funny_web随便输入一个用户名eg：admin，提示是实验室名字，输入尝试NSS，告知密码是QQ号，通过查询群管理QQ号，进入新页面，输入12345.1，获得flag。 ###奇妙的MD5通过网上查询知道，神奇的字符串是ffifdyop，F12查询线索知道md5绕过方法，输入x&#x3D;QNKCDZO&amp;y&#x3D;s878926199a绕过,最后通过a[]&#x3D;1&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9ca0.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa16.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351374316f2c2beb190de3f.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64dd.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906663.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351370d16f2c2beb190666e.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906683.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906622.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351366a16f2c2beb18edffe.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee007.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee010.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64ed.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64b1.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64d4.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351355716f2c2beb18c69ed.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351355716f2c2beb18c6a0d.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be78b.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be78f.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be795.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be7a2.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be7af.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352c8cc16f2c2beb13cafaf.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635130bc16f2c2beb18136aa.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351374316f2c2beb190de4a.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9bbc.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64e5.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351355716f2c2beb18c69e8.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351527716f2c2beb1cfe828.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635160e016f2c2beb1f0078c.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351338d16f2c2beb1881708.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dc5.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351374316f2c2beb190de2a.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351374316f2c2beb190de31.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5c6.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5ea.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5f3.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5be.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5c1.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816e4.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816e7.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816ed.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923b4.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635130bc16f2c2beb18136fa.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9c8b.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4cfb.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4d04.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4ce8.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4cf0.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4cf6.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee01b.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635130bc16f2c2beb181368c.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635130bc16f2c2beb181369d.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816f3.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635137c616f2c2beb1921268.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635137c616f2c2beb1921272.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa27.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa39.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa0f.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906625.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee026.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6353705d16f2c2beb1347f62.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa1c.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351374316f2c2beb190de39.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635137c616f2c2beb1921281.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635137c616f2c2beb1921293.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635130bc16f2c2beb18136e0.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635137c616f2c2beb192125f.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923bb.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352ca9116f2c2beb1436719.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351355716f2c2beb18c6a16.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351355716f2c2beb18c69e5.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9c8c.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9bbe.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352116416f2c2beb19c942a.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6352116416f2c2beb19c942e.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dd5.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dbe.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dc1.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923aa.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923ae.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351345516f2c2beb189e531.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351345516f2c2beb189e536.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351345516f2c2beb189e521.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/63513a0416f2c2beb197e3e1.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/63513a0416f2c2beb197e3e4.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351345516f2c2beb189e524.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351345516f2c2beb189e529.jpg">
+<meta property="og:image" content="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dcb.jpg">
+<meta property="article:published_time" content="2023-09-12T12:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-12T12:10:48.697Z">
+<meta property="article:author" content="David Penn">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9ca0.jpg">
+  
+  
+  
+  <title>CTF-NSS2022新生赛WriteUp - DavidPenn 的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"davidpenn888.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DavidPenn Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CTF-NSS2022新生赛WriteUp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-12 20:00" pubdate>
+          2023年9月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CTF-NSS2022新生赛WriteUp</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>#NSS2022新生赛<br>##Web<br>###funny_web<br>随便输入一个用户名eg：admin，提示是实验室名字，输入尝试NSS，告知密码是QQ号，通过查询群管理QQ号，进入新页面，输入12345.1，获得flag。<br><img src="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9ca0.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###奇妙的MD5<br>通过网上查询知道，神奇的字符串是ffifdyop，F12查询线索知道md5绕过方法，输入x=QNKCDZO&amp;y=s878926199a绕过,最后通过a[]=1&amp;b[]=2绕过，拿到flag。<br><img src="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa16.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###where_am_i<br>图片可以看到是山*间·古迹酒店，提示11位数字猜测是电话号码，通过携程等软件查询相关酒店，最终在小红书的介绍中找到这家酒店电话。<br><img src="https://pic1.imgdb.cn/item/6351374316f2c2beb190de3f.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###ez_ez_php<br>查看到最下面提示flag.php就到/flag.php查看，提示不在这里，在flag，删除后面.php，在/flag找到flag。<br><img src="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64dd.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###webdog1_start<br>通过robots.txt看到f14g.php进入，Burp抓包看到F1l1l1l1l1lag.php进入，输入?get=system(‘catflag/*’);，执行指令得到flag。<br><img src="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906663.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351370d16f2c2beb190666e.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906683.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906622.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Ez_upload<br>通过写&lt;?php&gt;普通标签，同时修改为jpg无法上传，修改为长标签<script language="php"></script>通过检查，再写入一句话木马，同时通过.htaccess修改文件解析为php，蚁剑连接未发现flag，修改为<script language="php">phpinfo();</script>查看配置，找到flag。<br><img src="https://pic1.imgdb.cn/item/6351366a16f2c2beb18edffe.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee007.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee010.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###ez_ez_php(revenge)<br>php伪协议，输入?file=php://filter/read=convert.base64-encode/resource=flag.php，得到，说在flag，不在flag.php，输入?file=php://filter/read=convert.base64-encode/resource=/flag，得到flag。<br><img src="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64ed.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64b1.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64d4.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###ez_rce<br>先试一下robots.txt，找到一个网页，网上找到ThinkPHP V5漏洞，找flag，最后cat flag获取。<br><img src="https://pic1.imgdb.cn/item/6351355716f2c2beb18c69ed.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351355716f2c2beb18c6a0d.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###ez_sql<br>按照对印的教程，弄了半天，才知道是因为这道题有and，or，空格等过滤导致指令不能正常使用，之后按照以下步骤输入相应指令拿到flag。<br><img src="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be78b.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be78f.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be795.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be7a2.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6352c89716f2c2beb13be7af.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6352c8cc16f2c2beb13cafaf.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###1z_unserialize<br>打开看到，需要反序列化，通过搜索，知道用system指令来执行，但是ls不到内容，经过思考，直接cat flag也没用，通过cat /*所有内容得到了flag。<br><img src="https://pic1.imgdb.cn/item/635130bc16f2c2beb18136aa.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###xff<br>通过HackBar，修改主机地址127.0.0.1，上传提示要是来自首页访问，用继续用HackBar添加，得到flag。<br><img src="https://pic1.imgdb.cn/item/6351374316f2c2beb190de4a.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###js_sign<br>源代码看到./main.js，进入，看到有base64编码的东西，查询是tapcode，通过解码上面的数，得到flag。<br><img src="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9bbc.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###ez_ez_unserialize<br>反序列化，经过分析输入x=O:1:”X”:2:{s:1:”x”;s:13:”fllllllag.php”;}，绕过wakeup，得到flag。<br><img src="https://pic1.imgdb.cn/item/635134ed16f2c2beb18b64e5.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###funny_php<br>第一个，想到计算器中数字e数字的表达，用2e9绕过，第二个，用两个NSSCTF,中间插入NSSCTF绕过，第三个，用之前的md5题方法绕过。<br><img src="https://pic1.imgdb.cn/item/6351355716f2c2beb18c69e8.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>##PWN<br>###Does your nc work？<br>按照群内视频步骤安装虚拟机，使用命令符，cd切换目录nss，最后cat flag。<br><img src="https://pic1.imgdb.cn/item/6351527716f2c2beb1cfe828.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>##REVERSE<br>###贪吃蛇<br>当时是玩出来的，IDA逆向没找到，可能第一题当时也不太熟悉IDA用法，只是打开找了下，然后还是没找到，就玩过了。<br><img src="https://pic1.imgdb.cn/item/635160e016f2c2beb1f0078c.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###babyre<br>IDA直接打开看到flag。<br><img src="https://pic1.imgdb.cn/item/6351338d16f2c2beb1881708.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###easyre<br>IDA打开，使用查找NSSCTF，找到flag。<br><img src="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dc5.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###xor<br>IDA打开，看到异或后的文本，编写一个C语言异或脚本，得到flag。<br><img src="https://pic1.imgdb.cn/item/6351374316f2c2beb190de2a.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351374316f2c2beb190de31.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###upx<br>用查壳工具查壳,用UPX工具蜕壳，丢进IDA，使用上面的异或脚本解码，得到flag。<br><img src="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5c6.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5ea.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5f3.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5be.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635136dc16f2c2beb18ff5c1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###base64<br>没有文件后缀，尝试用WinHEX查看文件，找到base64文件，解码得到flag。<br><img src="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816e4.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816e7.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###base64-2<br>没有文件后缀，尝试用WinHEX查看文件，找到base64文件，解码发现不对，查看是码表问题，对应新码表解码，得到flag。<br><img src="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816ed.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923b4.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###android<br>IDA打开，选择安卓APK格式，搜索NSSCTF，拿到flag。<br><img src="https://pic1.imgdb.cn/item/635130bc16f2c2beb18136fa.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###py1<br>通过C语言编译脚本解密异或，拿到flag。<br><img src="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9c8b.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###py2<br>使用exe反编译python工具，python pyinstxtractor.py py2.exe，得到反编译文件夹，再用.pyc反编译.py工具，将文件反编译成py，查看是base64编码，解码后得到flag。<br><img src="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4cfb.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4d04.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4ce8.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###pypy<br>使用pyc反编译py工具，编译成py后查看代码，发现输入字符数量为19时（下面代码给出的个数）KeyStream始终不变，修改代码打印KeyStream获得，再每个与给出的数字异或，编写python脚本，用chr()转化为字母，得到flag。<br><img src="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4cf0.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351362816f2c2beb18e4cf6.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee01b.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###android2<br>用apk反编译器打开，查看分析代码，编写Java脚本，取得flag。<br><img src="https://pic1.imgdb.cn/item/635130bc16f2c2beb181368c.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635130bc16f2c2beb181369d.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351338d16f2c2beb18816f3.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>##CRYPTO<br>###善哉善哉<br>用WinHEX查看，找到最后有摩尔斯电码，转化后是新佛曰，用在线网站转化得中文，计算字符md5，得到flag。<br><img src="https://pic1.imgdb.cn/item/635137c616f2c2beb1921268.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635137c616f2c2beb1921272.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa27.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###什锦<br>A通过社会主义核心价值观解密：富强明主文明和谐，B通过猪圈密码解密：PIGISSOCUTEWHYYOUKILLPIG，C通过BrianFuck解密：但是猪猪好好吃诶，计算md5得到flag。<br><img src="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa39.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa0f.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Welcome to Modern Cryptography<br>通过RSA解密工具解密。<br><img src="https://pic1.imgdb.cn/item/6351370d16f2c2beb1906625.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Sign<br>搜索发现可能是KeyBase软件加密，下载注册输入得到flag。<br><img src="https://pic1.imgdb.cn/item/6351366a16f2c2beb18ee026.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Matrix<br>通过网络了解到python的脚本，修改相应的数据，运行脚本得到flag。<br><img src="https://pic1.imgdb.cn/item/6353705d16f2c2beb1347f62.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###小明文<br>网上搜索相关资料，再结合题目编写脚本得到flag。<br><img src="https://pic1.imgdb.cn/item/6351380316f2c2beb192aa1c.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###yafu分解<br>使用yafu分解工具，对n进行分解，找到p，q，根据RSA解密方式编写脚本，得到答案，发现有字符偏移，R13解密后拿到flag。<br><img src="https://pic1.imgdb.cn/item/6351374316f2c2beb190de39.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635137c616f2c2beb1921281.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635137c616f2c2beb1921293.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###AES<br>随波逐流工具输入相关值解密。<br><img src="https://pic1.imgdb.cn/item/635130bc16f2c2beb18136e0.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###爆破MD5<br>网上找到相关脚本，修改字典和相关参数后爆破拿到flag。<br><img src="https://pic1.imgdb.cn/item/635137c616f2c2beb192125f.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Caesar?Ceaasr!<br>通过分析发现，大写字母两个连续，通过换行看到，竖着看第二第三个相等，猜测是编码后的NSS，竖着读出所有内容，R13解码后拿到flag。<br><img src="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923bb.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6352ca9116f2c2beb1436719.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###From one to 1<br>通过网络查找到工具尝试，解出对应的正确编码，得到正确的base64，对base64解码得到flag。<br><img src="https://pic1.imgdb.cn/item/6351355716f2c2beb18c6a16.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351355716f2c2beb18c69e5.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Not Victoria<br>通过网络查找到工具尝试，解出对应的正确编码，得到正确的base64，对base64解码得到flag。<br><img src="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9c8c.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635135dc16f2c2beb18d9bbe.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Huge Sudoku<br>通过网络找到C语言脚本，是A开始排列的，对应替换后，输出结果，然后替换回来，拿到flag。<br><img src="https://pic1.imgdb.cn/item/6352116416f2c2beb19c942a.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6352116416f2c2beb19c942e.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>##MISC<br>###Crack Me<br>第一层，用WinHEX修改头文件改成非加密文件，正常打开，是伪加密。第二层，用ziperello，尝试数字字母未成功，尝试数字破解成功，拿到flag。<br><img src="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dd5.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dbe.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dc1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Coffee Please<br>word半天找不到，通过换成zip解压，浏览所有文件发现flag，excel通过搜索关键字找到flag，ppt发现界面进度条不对劲，找到flag在左下角。<br><img src="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923aa.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/635133fb16f2c2beb18923ae.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351345516f2c2beb189e531.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Convert Somthing<br>通过了解知道base64隐写用python脚本解出一般，后一半发现在文本中还有零宽度字符隐写，通过工具找到后一半flag。<br><img src="https://pic1.imgdb.cn/item/6351345516f2c2beb189e536.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351345516f2c2beb189e521.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Coding In Time<br>通过拼接找到前面flag，hint是Coding In Time，找到每张驻留时间不同，去0后通过ASCII翻译得到flag。<br><img src="https://pic1.imgdb.cn/item/63513a0416f2c2beb197e3e1.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/63513a0416f2c2beb197e3e4.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>###Cover Removed<br>通过移动鼠标发现图片后面还有字，找到一半flag，通过了解尝试很多工具，最后找到wbs43open-win32工具找到后半flag。<br><img src="https://pic1.imgdb.cn/item/6351345516f2c2beb189e524.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351345516f2c2beb189e529.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://pic1.imgdb.cn/item/6351349d16f2c2beb18a9dcb.jpg" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CTF/WriteUp/" class="category-chain-item">WriteUp</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/">#CTF</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CTF-NSS2022新生赛WriteUp</div>
+      <div>https://davidpenn888.github.io/2023/09/12/CTF_competition_0/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>David Penn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/20/CTF-Show-1/" title="CTF-SQL注入漏洞">
+                        <span class="hidden-mobile">CTF-SQL注入漏洞</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/roomclean_project/parson.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
