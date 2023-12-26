@@ -2,7 +2,7 @@ if (location.pathname == '/2023/04/27/CleanRoomProject/') {
     // 仅设定的页面需要执行的代码
 
     // 日期字符串
-    const startDateString = '2023-04-26';
+    const startDateString = '2023-04-25';
 
     // 将日期字符串转换为日期对象
     const startDate = new Date(startDateString);
