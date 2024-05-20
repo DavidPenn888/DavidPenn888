@@ -24,7 +24,7 @@
 <meta property="og:description" content="《网络编程基础》第8次实验-2024春季-邓云芃-202131774224 【实验8-1】调用requests库和BeautifulSoup库，使用BeautifulSoup库爬取计科院网站首页动态新闻 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849import re">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-20T02:00:50.000Z">
-<meta property="article:modified_time" content="2024-05-20T03:49:47.268Z">
+<meta property="article:modified_time" content="2024-05-20T07:07:26.757Z">
 <meta property="article:author" content="David Penn">
 <meta property="article:tag" content="School">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          14k 字
+          6.8k 字
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          119 分钟
+          57 分钟
         
       </span>
     
@@ -278,14 +278,7 @@
 <p>【实验8-1】调用requests库和BeautifulSoup库，使用BeautifulSoup库爬取计科院网站首页动态新闻</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br><span class="hljs-comment"># 目标网址</span><br>url = <span class="hljs-string">&#x27;https://www.swpu.edu.cn/scs/index.htm&#x27;</span><br><br><span class="hljs-comment"># 调用requests库，获取网页内容</span><br>res = requests.get(url)<br><br><span class="hljs-comment"># 打印网页返回的状态码</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&quot;</span>, res.status_code)<br><br><span class="hljs-comment"># 如果请求成功，继续处理</span><br><span class="hljs-keyword">if</span> res.status_code == <span class="hljs-number">200</span>:<br>    <span class="hljs-comment"># 指定编码方式为UTF-8</span><br>    res.encoding = <span class="hljs-string">&#x27;utf-8&#x27;</span><br>    <span class="hljs-comment"># 把res的内容以字符串的形式返回</span><br>    html_content = res.text<br><br>    <span class="hljs-comment"># 把网页解析为BeautifulSoup对象</span><br>    soup = BeautifulSoup(html_content, <span class="hljs-string">&#x27;html.parser&#x27;</span>)<br><br>    <span class="hljs-comment"># 通过定位标签和属性提取我们想要的数据</span><br>    <span class="hljs-comment"># 这里假设动态新闻位于class为&quot;new_list new_list3&quot;的div中，标题在ul class=&quot;dynamic_list fr&quot;中的li项目下的&lt;em&gt;&lt;/em&gt;内</span><br>    news_div = soup.find(<span class="hljs-string">&#x27;div&#x27;</span>, class_=<span class="hljs-string">&#x27;new_list new_list3&#x27;</span>)<br>    <span class="hljs-keyword">if</span> news_div:<br>        <span class="hljs-comment"># 找到包含所有动态新闻标题的ul标签</span><br>        ul_tag = news_div.find(<span class="hljs-string">&#x27;ul&#x27;</span>, class_=<span class="hljs-string">&#x27;dynamic_list fr&#x27;</span>)<br>        <span class="hljs-keyword">if</span> ul_tag:<br>            <span class="hljs-comment"># 找到ul标签下的所有li标签</span><br>            li_tags = ul_tag.find_all(<span class="hljs-string">&#x27;li&#x27;</span>)<br>            <span class="hljs-comment"># 输出每个动态新闻标题和日期</span><br>            <span class="hljs-keyword">for</span> li <span class="hljs-keyword">in</span> li_tags:<br>                <span class="hljs-comment"># 日期在&lt;span&gt;&lt;/span&gt;标签内</span><br>                date_tag = li.find(<span class="hljs-string">&#x27;span&#x27;</span>)<br>                <span class="hljs-comment"># 标题在&lt;em&gt;&lt;/em&gt;标签内</span><br>                title_tag = li.find(<span class="hljs-string">&#x27;em&#x27;</span>)<br>                <span class="hljs-keyword">if</span> date_tag <span class="hljs-keyword">and</span> title_tag:<br>                    <span class="hljs-comment"># 输出日期和标题，以空格分隔</span><br>                    <span class="hljs-built_in">print</span>(date_tag.text.strip(), title_tag.text.strip())<br>                <span class="hljs-keyword">else</span>:<br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;未找到动态新闻日期或标题&quot;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;未找到动态新闻列表&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;未找到动态新闻容器&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;请求失败，状态码:&quot;</span>, res.status_code)<br><br></code></pre></td></tr></table></figure>
 
-<pre><code class="hljs"> 200
-[04-24] 天津科技大学人工智能学院来我院调研
-[04-22] 学院党委开展“追忆革命先烈，赓续红色血脉
-[04-22] 赵刚同志任计算机与软件学院院长、党委副书
-[04-17] 计算机与软件学院召开2024届毕业生就业工作
-[04-16] 我院学生团队斩获ASC世界大学生超级计算机
-[04-15] 马克思主义学院来计算机与软件学院调研虚拟
-</code></pre>
+
 <p>【实验8-2】调用requests库和os库（创建文件夹）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-comment"># 图片URL</span><br>url = <span class="hljs-string">&quot;https://blogs.bing.com/content/images/MicrosoftBingBlogs_SingleLine.png&quot;</span><br><br><span class="hljs-comment"># 文件保存路径</span><br>folder_path = <span class="hljs-string">&quot;D:/picture&quot;</span><br>file_path = os.path.join(folder_path, <span class="hljs-string">&quot;MicrosoftBingBlogs_SingleLine.png&quot;</span>)<br><br><span class="hljs-comment"># 检查文件夹是否存在，不存在则创建</span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(folder_path):<br>    os.makedirs(folder_path)<br><br><span class="hljs-comment"># 检查文件是否已存在</span><br><span class="hljs-keyword">if</span> os.path.exists(file_path):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;文件已存在:&quot;</span>, file_path)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-comment"># 发起GET请求下载图片文件</span><br>    response = requests.get(url)<br>    <br>    <span class="hljs-comment"># 检查下载是否成功</span><br>    <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:<br>        <span class="hljs-comment"># 写入文件</span><br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(file_path, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> file:<br>            file.write(response.content)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;文件已保存至:&quot;</span>, file_path)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;爬取失败&quot;</span>)<br><br></code></pre></td></tr></table></figure>
 
@@ -294,389 +287,14 @@
 <p>【实验8-3】目标：从下厨房网站爬取本周热门菜谱清单（菜品名称、网址、食材构成）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> urljoin<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_recipes</span>(<span class="hljs-params">url</span>):<br>    <span class="hljs-comment"># 发送GET请求获取页面内容</span><br>    response = requests.get(url)<br>    <span class="hljs-comment"># 使用BeautifulSoup解析页面内容</span><br>    soup = BeautifulSoup(response.content, <span class="hljs-string">&#x27;html.parser&#x27;</span>)<br>    <span class="hljs-comment"># 提取最小父级标签</span><br>    recipe_divs = soup.find_all(<span class="hljs-string">&#x27;div&#x27;</span>, class_=<span class="hljs-string">&#x27;info pure-u&#x27;</span>)<br>    <br>    recipes = []<br>    <span class="hljs-comment"># 循环提取菜名、URL和食材</span><br>    <span class="hljs-keyword">for</span> recipe_div <span class="hljs-keyword">in</span> recipe_divs:<br>        <span class="hljs-comment"># 提取菜名</span><br>        name = recipe_div.find(<span class="hljs-string">&#x27;p&#x27;</span>, class_=<span class="hljs-string">&#x27;name&#x27;</span>).text.strip()<br>        <span class="hljs-comment"># 提取详细页URL</span><br>        relative_url = recipe_div.find(<span class="hljs-string">&#x27;p&#x27;</span>, class_=<span class="hljs-string">&#x27;name&#x27;</span>).a[<span class="hljs-string">&#x27;href&#x27;</span>]<br>        absolute_url = urljoin(url, relative_url)<br>        <span class="hljs-comment"># 提取食材</span><br>        ingredients = recipe_div.find(<span class="hljs-string">&#x27;p&#x27;</span>, class_=<span class="hljs-string">&#x27;ing ellipsis&#x27;</span>).text.strip()<br>        <br>        recipes.append(&#123;<span class="hljs-string">&#x27;name&#x27;</span>: name, <span class="hljs-string">&#x27;url&#x27;</span>: absolute_url, <span class="hljs-string">&#x27;ingredients&#x27;</span>: ingredients&#125;)<br>    <br>    <span class="hljs-keyword">return</span> recipes<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    url = <span class="hljs-string">&#x27;http://www.xiachufang.com/explore/&#x27;</span><br>    recipes = get_recipes(url)<br>    <br>    <span class="hljs-keyword">for</span> recipe <span class="hljs-keyword">in</span> recipes:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;菜名:&quot;</span>, recipe[<span class="hljs-string">&#x27;name&#x27;</span>])<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;URL:&quot;</span>, recipe[<span class="hljs-string">&#x27;url&#x27;</span>])<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;食材:&quot;</span>, recipe[<span class="hljs-string">&#x27;ingredients&#x27;</span>])<br>        <span class="hljs-built_in">print</span>()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br><br></code></pre></td></tr></table></figure>
 
-<pre><code class="hljs">菜名: 土法腌制100%出沙出油的五香咸鸭蛋
-URL: http://www.xiachufang.com/recipe/107284231/
-食材: 鸭蛋、水、盐、高度白酒、桂皮、花椒、八角、香叶、白醋
 
-菜名: 萬能調料汁公式‼ 家常菜百搭醬汁廚房小白看‼️       ❤ (做法在評论区⬇️)❤
-URL: http://www.xiachufang.com/recipe/107208624/
-食材: 生抽、醋、蚝油、白糖、淀粉、黑胡椒、老抽、香油、蒜末、蜂蜜
-
-菜名: 超开胃的番茄土豆肥牛汤‼️下米饭无敌了
-URL: http://www.xiachufang.com/recipe/105910837/
-食材: 土豆、番茄、肥牛、大蒜、小葱
-
-菜名: 万能的“拌面，水饺🥟”调料
-URL: http://www.xiachufang.com/recipe/107312845/
-食材: 蒜末、盐、蚝油、香油、葱、鸡精、生抽、糖
-
-菜名: 好吃到上头的日式肥牛饭✅一吃就爱上
-URL: http://www.xiachufang.com/recipe/107186146/
-食材: 肥牛卷、洋葱、鸡蛋、生抽、老抽、蚝油、料酒、糖、盐、淀粉
-
-菜名: 比布丁还要嫩，老少皆宜的肉沫蒸蛋
-URL: http://www.xiachufang.com/recipe/106781050/
-食材: 鸡蛋、肉沫、葱花、蚝油、生抽、盐、淀粉水
-
-菜名: 蒜香鸡翅｜孩子们的最爱
-URL: http://www.xiachufang.com/recipe/106928120/
-食材: 鸡翅、蒜头、葱、白糖
-
-菜名: 比外面卖的凉拌菜都好吃
-URL: http://www.xiachufang.com/recipe/106828623/
-食材: 生抽、香油、蚝油、米醋、蒜瓣、小米辣、白芝麻
-
-菜名: 生菜牛肉拌饭
-URL: http://www.xiachufang.com/recipe/107148148/
-食材: 牛肉、生菜、鸡蛋、海苔碎、蒜、青红椒
-
-菜名: 酸辣咸甜的醋溜白菜🥬
-URL: http://www.xiachufang.com/recipe/106927375/
-食材: 白菜、干辣椒、小米椒、大蒜
-
-菜名: 万能低脂酱汁
-URL: http://www.xiachufang.com/recipe/106627478/
-食材: 葱、醋、生抽、蚝油、柠檬、糖、香菜、小米椒
-
-菜名: ‼️比辣条还好吃百倍〰️香辣豆皮✅零厨艺
-URL: http://www.xiachufang.com/recipe/106030102/
-食材: 千张（豆皮）、小米椒、、葱花、香菜、生抽、香醋、蚝油、盐糖
-
-菜名: 青椒火腿炒鸡蛋
-URL: http://www.xiachufang.com/recipe/106886517/
-食材: 青椒、火腿肠、鸡蛋、蒜末、生抽、蚝油
-
-菜名: 香辣孜然土豆火腿肠～秒杀烧烤店！！
-URL: http://www.xiachufang.com/recipe/107237340/
-食材: 土豆、火腿肠、孜然烧烤粉、白芝麻、辣椒粉、生抽、盐、葱
-
-菜名: 低脂凉拌肥牛
-URL: http://www.xiachufang.com/recipe/106767601/
-食材: 香菜、蒜、生抽、醋、蚝油、青红辣椒、白芝麻、辣椒面、肥牛
-
-菜名: 豆腐抱蛋🥚(瘦身减脂餐)
-URL: http://www.xiachufang.com/recipe/107262344/
-食材: 鸡蛋、内脂豆腐、葱花、生抽、蚝油、盐、味素、香油、水、食用油
-
-菜名: 椒麻口水鸡
-URL: http://www.xiachufang.com/recipe/106763393/
-食材: 鸡腿、小米椒、青椒、蒜末、白芝麻、辣椒粉、金针菇
-
-菜名: 白菜豆腐这样做😋连汤汁都不剩🔅鲜美又美味
-URL: http://www.xiachufang.com/recipe/106129925/
-食材: 大白菜、豆腐、葱、姜、蒜、生抽、盐
-
-菜名: 土豆片炒火腿肠
-URL: http://www.xiachufang.com/recipe/106514952/
-食材: 土豆、火腿肠、青椒、蒜、生抽、蚝油、盐、鸡精
-
-菜名: 想吃一辈子❗️番茄肥牛烩饭
-URL: http://www.xiachufang.com/recipe/106499878/
-食材: 西红柿、肥牛、土豆、洋葱
-
-菜名: 好吃到舔盘的蒜香黑椒牛肉粒
-URL: http://www.xiachufang.com/recipe/106502887/
-食材: 牛里脊、蒜头、生抽、玉米淀粉、白糖、蒜、盐、料酒、黄油、食用油、黑胡椒
-
-菜名: 辣椒炒茄子
-URL: http://www.xiachufang.com/recipe/107169532/
-食材: 茄子、青椒、小米椒、老抽、生抽、蚝油
-
-菜名: 白玉菇炒火腿
-URL: http://www.xiachufang.com/recipe/106871621/
-食材: 白玉菇、鸡蛋、青红椒，火腿肠、葱，蒜、生抽，蚝油，盐，鸡精
-
-菜名: 可乐鸡翅
-URL: http://www.xiachufang.com/recipe/106403214/
-食材: 鸡翅、老抽、生抽、蚝油、可乐、葱姜蒜、料酒
-
-菜名: 补钙神器——豆角炒肉！超下饭
-URL: http://www.xiachufang.com/recipe/106843514/
-食材: 豆角、里脊肉、料酒、老抽、生抽、食用油、葱姜、食盐
-</code></pre>
 <p>【实验8-4】目标：爬取豆瓣Top250电影的信息（包括：序号/电影名/评分/推荐语/链接）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><span class="hljs-keyword">import</span> csv<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">top250_crawler</span>(<span class="hljs-params">url, start</span>):<br>    headers = &#123;<br>        <span class="hljs-string">&#x27;User-agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/1&#x27;</span><br>    &#125;<br><br>    response = requests.get(url, headers=headers)<br>    soup = BeautifulSoup(response.text, <span class="hljs-string">&#x27;html.parser&#x27;</span>)<br>    movie_items = soup.find_all(<span class="hljs-string">&#x27;div&#x27;</span>, class_=<span class="hljs-string">&#x27;item&#x27;</span>)<br>    i = start + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> movie_items:<br>         title = item.select_one(<span class="hljs-string">&#x27;.title&#x27;</span>).text<br>         rating = item.select_one(<span class="hljs-string">&#x27;.rating_num&#x27;</span>).text<br>         data = item.select(<span class="hljs-string">&#x27;.bd p&#x27;</span>)[<span class="hljs-number">0</span>].text.split(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>         time = data[<span class="hljs-number">2</span>].replace(<span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).split(<span class="hljs-string">&#x27;/&#x27;</span>)[<span class="hljs-number">0</span>]<br>         country = data[<span class="hljs-number">2</span>].replace(<span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).split(<span class="hljs-string">&#x27;/&#x27;</span>)[<span class="hljs-number">1</span>]<br>         <span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>(i) + <span class="hljs-string">&#x27;.&#x27;</span> + title + <span class="hljs-string">&#x27;,&#x27;</span> + country + <span class="hljs-string">&#x27;,&#x27;</span> + time)<br>         i += <span class="hljs-number">1</span><br><br>url = <span class="hljs-string">&#x27;https://movie.douban.com/top250&#x27;</span><br>start = <span class="hljs-number">0</span><br><br><span class="hljs-keyword">for</span> page_number <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>    page = <span class="hljs-string">&#x27;?start=&#x27;</span> + <span class="hljs-built_in">str</span>(start) + <span class="hljs-string">&#x27;&amp;filter=&#x27;</span><br>    new_url = url + page<br>    top250_crawler(new_url, start)<br>    start += <span class="hljs-number">25</span><br><br></code></pre></td></tr></table></figure>
 
-<pre><code class="hljs">1.肖申克的救赎, 美国 ,1994 
-2.霸王别姬, 中国大陆中国香港 ,1993 
-3.阿甘正传, 美国 ,1994 
-4.泰坦尼克号, 美国墨西哥 ,1997 
-5.千与千寻, 日本 ,2001 
-6.这个杀手不太冷, 法国美国 ,1994 
-7.美丽人生, 意大利 ,1997 
-8.星际穿越, 美国英国加拿大 ,2014 
-9.盗梦空间, 美国英国 ,2010 
-10.楚门的世界, 美国 ,1998 
-11.辛德勒的名单, 美国 ,1993 
-12.忠犬八公的故事, 美国英国 ,2009 
-13.海上钢琴师, 意大利 ,1998 
-14.三傻大闹宝莱坞, 印度 ,2009 
-15.放牛班的春天, 法国瑞士德国 ,2004 
-16.机器人总动员, 美国 ,2008 
-17.疯狂动物城, 美国 ,2016 
-18.无间道, 中国香港 ,2002 
-19.控方证人, 美国 ,1957 
-20.大话西游之大圣娶亲, 中国香港中国大陆 ,1995 
-21.熔炉, 韩国 ,2011 
-22.教父, 美国 ,1972 
-23.触不可及, 法国 ,2011 
-24.当幸福来敲门, 美国 ,2006 
-25.寻梦环游记, 美国 ,2017 
-26.末代皇帝, 英国意大利中国大陆法国 ,1987 
-27.龙猫, 日本 ,1988 
-28.怦然心动, 美国 ,2010 
-29.活着, 中国大陆中国香港 ,1994 
-30.哈利·波特与魔法石, 美国英国 ,2001 
-31.蝙蝠侠：黑暗骑士, 美国英国 ,2008 
-32.指环王3：王者无敌, 美国新西兰 ,2003 
-33.我不是药神, 中国大陆 ,2018 
-34.乱世佳人, 美国 ,1939 
-35.飞屋环游记, 美国 ,2009 
-36.素媛, 韩国 ,2013 
-37.哈尔的移动城堡, 日本 ,2004 
-38.十二怒汉, 美国 ,1957 
-39.让子弹飞, 中国大陆中国香港 ,2010 
-40.何以为家, 黎巴嫩美国法国塞浦路斯卡塔尔英国 ,2018 
-41.摔跤吧！爸爸, 印度 ,2016 
-42.猫鼠游戏, 美国加拿大 ,2002 
-43.天空之城, 日本 ,1986 
-44.海蒂和爷爷, 德国瑞士 ,2015 
-45.鬼子来了, 中国大陆 ,2000 
-46.少年派的奇幻漂流, 美国中国台湾英国加拿大 ,2012 
-47.钢琴家, 英国法国波兰德国 ,2002 
-48.大话西游之月光宝盒, 中国香港中国大陆 ,1995 
-49.指环王2：双塔奇兵, 美国新西兰 ,2002 
-50.闻香识女人, 美国 ,1992 
-51.死亡诗社, 美国 ,1989 
-52.绿皮书, 美国中国大陆 ,2018 
-53.大闹天宫,1964(中国大陆),1961(中国大陆)
-54.罗马假日, 美国 ,1953 
-55.指环王1：护戒使者, 新西兰美国 ,2001 
-56.黑客帝国, 美国 ,1999 
-57.天堂电影院, 意大利法国 ,1988 
-58.教父2, 美国 ,1974 
-59.狮子王, 美国 ,1994 
-60.辩护人, 韩国 ,2013 
-61.饮食男女, 中国台湾美国 ,1994 
-62.搏击俱乐部, 美国 ,1999 
-63.本杰明·巴顿奇事, 美国 ,2008 
-64.美丽心灵, 美国 ,2001 
-65.穿条纹睡衣的男孩, 英国美国 ,2008 
-66.窃听风暴, 德国 ,2006 
-67.情书, 日本 ,1995 
-68.两杆大烟枪, 英国 ,1998 
-69.西西里的美丽传说, 意大利美国 ,2000 
-70.音乐之声, 美国 ,1965 
-71.看不见的客人, 西班牙 ,2016 
-72.哈利·波特与死亡圣器(下), 美国英国 ,2011 
-73.阿凡达, 美国 ,2009 
-74.拯救大兵瑞恩, 美国 ,1998 
-75.飞越疯人院, 美国 ,1975 
-76.小鞋子, 伊朗 ,1997 
-77.功夫, 中国大陆中国香港 ,2004 
-78.沉默的羔羊, 美国 ,1991 
-79.布达佩斯大饭店, 美国德国英国 ,2014 
-80.禁闭岛, 美国 ,2010 
-81.蝴蝶效应, 美国加拿大 ,2004 
-82.哈利·波特与阿兹卡班的囚徒, 英国美国 ,2004 
-83.致命魔术, 英国美国 ,2006 
-84.心灵捕手, 美国 ,1997 
-85.超脱, 美国 ,2011 
-86.低俗小说, 美国 ,1994 
-87.摩登时代, 美国 ,1936 
-88.春光乍泄, 中国香港日本韩国 ,1997 
-89.海豚湾, 美国 ,2009 
-90.喜剧之王, 中国香港 ,1999 
-91.美国往事, 美国意大利 ,1984 
-92.致命ID, 美国 ,2003 
-93.杀人回忆, 韩国 ,2003 
-94.哈利·波特与密室, 英国美国 ,2002 
-95.红辣椒, 日本 ,2006 
-96.加勒比海盗, 美国 ,2003 
-97.七宗罪, 美国 ,1995 
-98.一一, 中国台湾日本 ,2000 
-99.狩猎, 丹麦瑞典 ,2012 
-100.唐伯虎点秋香, 中国香港 ,1993 
-101.7号房的礼物, 韩国 ,2013 
-102.被嫌弃的松子的一生, 日本 ,2006 
-103.蝙蝠侠：黑暗骑士崛起, 美国英国 ,2012 
-104.甜蜜蜜, 中国香港 ,1996 
-105.爱在黎明破晓前, 美国奥地利瑞士 ,1995 
-106.请以你的名字呼唤我, 意大利法国巴西美国 ,2017 
-107.第六感, 美国 ,1999 
-108.超能陆战队, 美国 ,2014 
-109.入殓师, 日本 ,2008 
-110.重庆森林, 中国香港 ,1994 
-111.断背山, 美国加拿大 ,2005 
-112.剪刀手爱德华, 美国 ,1990 
-113.幽灵公主, 日本 ,1997 
-114.勇敢的心, 美国 ,1995 
-115.爱在日落黄昏时, 美国法国 ,2004 
-116.寄生虫, 韩国 ,2019 
-117.菊次郎的夏天, 日本 ,1999 
-118.借东西的小人阿莉埃蒂, 日本 ,2010 
-119.消失的爱人, 美国 ,2014 
-120.无人知晓, 日本 ,2004 
-121.阳光灿烂的日子, 中国大陆中国香港 ,1994 
-122.未麻的部屋, 日本 ,1997 
-123.时空恋旅人, 英国 ,2013 
-124.完美的世界, 美国 ,1993 
-125.倩女幽魂, 中国香港 ,1987 
-126.天使爱美丽, 法国德国 ,2001 
-127.小森林 夏秋篇, 日本 ,2014 
-128.哈利·波特与火焰杯, 英国美国 ,2005 
-129.侧耳倾听, 日本 ,1995 
-130.驯龙高手, 美国 ,2010 
-131.幸福终点站, 美国 ,2004 
-132.一个叫欧维的男人决定去死, 瑞典 ,2015 
-133.教父3, 美国 ,1990 
-134.怪兽电力公司, 美国 ,2001 
-135.新世界, 韩国 ,2013 
-136.茶馆, 中国大陆 ,1982(中国大陆) 
-137.小森林 冬春篇, 日本 ,2015 
-138.玩具总动员3, 美国 ,2010 
-139.傲慢与偏见, 法国英国美国 ,2005 
-140.萤火之森, 日本 ,2011 
-141.被解救的姜戈, 美国 ,2012 
-142.釜山行, 韩国 ,2016 
-143.神偷奶爸, 美国法国 ,2010 
-144.色，戒, 中国台湾中国大陆美国中国香港 ,2007 
-145.九品芝麻官, 中国香港中国大陆 ,1994 
-146.告白, 日本 ,2010 
-147.哪吒闹海, 中国大陆 ,1979 
-148.玛丽和马克思, 澳大利亚美国 ,2009 
-149.喜宴, 中国台湾美国 ,1993 
-150.大鱼, 美国 ,2003 
-151.模仿游戏, 英国美国 ,2014 
-152.头号玩家, 美国 ,2018 
-153.头脑特工队, 美国 ,2015 
-154.花样年华, 中国香港 ,2000 
-155.射雕英雄传之东成西就, 中国香港 ,1993 
-156.我是山姆, 美国 ,2001 
-157.七武士, 日本 ,1954 
-158.血战钢锯岭, 澳大利亚美国 ,2016 
-159.阳光姐妹淘, 韩国 ,2011 
-160.惊魂记, 美国 ,1960 
-161.恐怖直播, 韩国 ,2013 
-162.黑客帝国3：矩阵革命, 美国 ,2003 
-163.你的名字。, 日本 ,2016 
-164.三块广告牌, 英国美国 ,2017 
-165.电锯惊魂, 美国 ,2004 
-166.心迷宫, 中国大陆 ,2014 
-167.达拉斯买家俱乐部, 美国 ,2013 
-168.疯狂原始人, 美国 ,2013 
-169.谍影重重3, 美国德国法国英国 ,2007 
-170.小丑, 美国加拿大 ,2019 
-171.英雄本色, 中国香港 ,1986 
-172.上帝之城, 巴西法国 ,2002 
-173.风之谷, 日本 ,1984 
-174.绿里奇迹, 美国 ,1999 
-175.爱在午夜降临前, 美国希腊 ,2013 
-176.海街日记, 日本 ,2015 
-177.背靠背，脸对脸, 中国大陆中国香港 ,1994 
-178.心灵奇旅, 美国 ,2020 
-179.纵横四海, 中国香港 ,1991 
-180.卢旺达饭店, 英国南非意大利美国 ,2004 
-181.疯狂的石头, 中国大陆中国香港 ,2006 
-182.记忆碎片, 美国 ,2000 
-183.无间道2, 中国香港 ,2003 
-184.雨中曲, 美国 ,1952 
-185.2001太空漫游, 英国美国 ,1968 
-186.小偷家族, 日本 ,2018 
-187.岁月神偷, 中国香港中国大陆 ,2010 
-188.无敌破坏王, 美国 ,2012 
-189.忠犬八公物语, 日本 ,1987 
-190.荒蛮故事, 阿根廷西班牙 ,2014 
-191.冰川时代, 美国 ,2002 
-192.爆裂鼓手, 美国 ,2014 
-193.恐怖游轮, 英国澳大利亚 ,2009 
-194.牯岭街少年杀人事件, 中国台湾 ,1991 
-195.东京教父, 日本 ,2003 
-196.魔女宅急便, 日本 ,1989 
-197.大佛普拉斯, 中国台湾 ,2017 
-198.贫民窟的百万富翁, 英国 ,2008 
-199.遗愿清单, 美国 ,2007 
-200.东邪西毒, 中国香港中国台湾 ,1994 
-201.你看起来好像很好吃, 日本 ,2010 
-202.可可西里, 中国大陆中国香港 ,2004 
-203.末路狂花, 美国英国法国 ,1991 
-204.城市之光, 美国 ,1931 
-205.源代码, 美国加拿大 ,2011 
-206.黑天鹅, 美国 ,2010 
-207.海边的曼彻斯特, 美国 ,2016 
-208.真爱至上, 英国美国法国 ,2003 
-209.波西米亚狂想曲, 英国美国 ,2018 
-210.雨人, 美国 ,1988 
-211.青蛇, 中国香港中国大陆 ,1993 
-212.初恋这件小事, 泰国 ,2010 
-213.爱乐之城, 美国 ,2016 
-214.人工智能, 美国英国 ,2001 
-215.疯狂的麦克斯4：狂暴之路, 澳大利亚美国 ,2015 
-216.终结者2：审判日, 美国法国 ,1991 
-217.恋恋笔记本, 美国 ,2004 
-218.芙蓉镇, 中国大陆 ,1987 
-219.虎口脱险, 法国英国 ,1966 
-220.新龙门客栈, 中国香港中国大陆 ,1992 
-221.罗生门, 日本 ,1950 
-222.无耻混蛋, 德国美国 ,2009 
-223.崖上的波妞, 日本 ,2008 
-224.花束般的恋爱, 日本 ,2021 
-225.千钧一发, 美国 ,1997 
-226.彗星来的那一夜, 美国英国 ,2013 
-227.哈利·波特与死亡圣器(上), 英国美国 ,2010 
-228.萤火虫之墓, 日本 ,1988 
-229.高山下的花环,1985 ,1984(中国大陆)
-230.白日梦想家, 美国英国 ,2013 
-231.黑客帝国2：重装上阵, 美国 ,2003 
-232.奇迹男孩, 美国中国香港 ,2017 
-233.二十二, 中国大陆 ,2015 
-234.火星救援, 英国美国匈牙利约旦 ,2015 
-235.战争之王, 美国德国 ,2005 
-236.血钻, 美国德国英国 ,2006 
-237.步履不停, 日本 ,2008 
-238.千年女优, 日本 ,2001 
-239.哈利·波特与凤凰社, 英国美国 ,2007 
-240.房间, 爱尔兰加拿大英国美国 ,2015 
-241.魂断蓝桥, 美国 ,1940 
-242.谍影重重2, 美国德国 ,2004 
-243.大红灯笼高高挂, 中国大陆中国香港中国台湾 ,1991 
-244.蜘蛛侠：平行宇宙, 美国 ,2018 
-245.弱点, 美国 ,2009 
-246.谍影重重, 美国德国捷克 ,2002 
-247.阿飞正传, 中国香港 ,1990 
-248.朗读者, 美国德国 ,2008 
-249.再次出发之纽约遇见你, 美国 ,2013 
-250.隐藏人物, 美国 ,2016 
-</code></pre>
+
+
 <p>【实验8-5】目标：网易云音乐或者酷狗音乐或者QQ音乐平台爬取音乐评论</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><span class="hljs-keyword">from</span> Crypto.Util.Padding <span class="hljs-keyword">import</span> pad<br><span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64encode<br><br><span class="hljs-comment"># 实现AES加密需要的三个模块</span><br><br><span class="hljs-comment"># py实现AES-CBC加密</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt_aes</span>(<span class="hljs-params">text, key, iv</span>):<br>    cipher = AES.new(key.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>), AES.MODE_CBC, iv.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    padded_text = pad(text.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>), AES.block_size)<br>    ciphertext = cipher.encrypt(padded_text)<br>    <span class="hljs-keyword">return</span> b64encode(ciphertext).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br><span class="hljs-comment"># 仿照function b(a, b)构造加密函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">b</span>(<span class="hljs-params">a, b</span>):<br>    c = b<br>    d = <span class="hljs-string">&quot;0102030405060708&quot;</span><br>    e = a<br>    f = encrypt_aes(e, c, d)<br>    <span class="hljs-keyword">return</span> f<br><br><span class="hljs-comment"># 评论数据(i6c)</span><br>d = &#123;<br>    <span class="hljs-string">&#x27;csrf_token&#x27;</span>: <span class="hljs-string">&#x27;a377fd1409c2d967e66527ddf3ce2c02&#x27;</span>,  <span class="hljs-comment"># 可以为空值</span><br>    <span class="hljs-string">&#x27;cursor&#x27;</span>: <span class="hljs-string">&#x27;-1&#x27;</span>,<br>    <span class="hljs-string">&#x27;offset&#x27;</span>: <span class="hljs-string">&#x27;0&#x27;</span>,<br>    <span class="hljs-string">&#x27;orderType&#x27;</span>: <span class="hljs-string">&#x27;1&#x27;</span>,<br>    <span class="hljs-string">&#x27;pageNo&#x27;</span>: <span class="hljs-string">&#x27;1&#x27;</span>,<br>    <span class="hljs-string">&#x27;pageSize&#x27;</span>: <span class="hljs-string">&#x27;20&#x27;</span>,  <span class="hljs-comment"># 评论数</span><br>    <span class="hljs-string">&#x27;rid&#x27;</span>: <span class="hljs-string">&#x27;R_SO_4_167827&#x27;</span>,  <span class="hljs-comment"># 歌曲编号</span><br>    <span class="hljs-string">&#x27;threadId&#x27;</span>: <span class="hljs-string">&#x27;R_SO_4_167827&#x27;</span>  <span class="hljs-comment"># 歌曲编号</span><br>&#125;<br><br><span class="hljs-comment"># 16位随机字符串</span><br>i = <span class="hljs-string">&quot;4BfsFyBWTSe0C5eQ&quot;</span><br><span class="hljs-comment"># bsu6o([&quot;流泪&quot;, &quot;强&quot;])</span><br>e = <span class="hljs-string">&quot;010001&quot;</span><br><span class="hljs-comment"># bsu6o(Xo0x.md)</span><br>f = <span class="hljs-string">&quot;00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7&quot;</span><br><span class="hljs-comment"># bsu6o([&quot;爱心&quot;, &quot;女孩&quot;, &quot;惊恐&quot;, &quot;大笑&quot;])</span><br>g = <span class="hljs-string">&quot;0CoJUm6Qyw8W8jud&quot;</span><br><br><span class="hljs-comment"># 将i6c转化为json格式</span><br>d_json = json.dumps(d)<br><br><span class="hljs-comment"># 调用两次b()函数得出encText</span><br>encText = b(d_json, g)<br>encText = b(encText, i)<br><br><span class="hljs-comment"># 随机字符串获得encSecKey</span><br>encSecKey = <span class="hljs-string">&quot;ac120b775a368f6cdf196f173ac16bccaa08e8589fdd824f7445cb71a6f12f7a25da019240ce2f69a214ef34ba2795b057b1cf4fd24fbf4bd9f78167c9c69de4ee8be3bb8bb9119e2a0328219497864558363bc8e5c8a7999822f127dc0d7fc3bbf0a53f3e2e091eba811eb57558dd6290ab4224f636cea2d264bb2ed7c7cee8&quot;</span><br><br><span class="hljs-comment"># 请求头</span><br>headers = &#123;<br>    <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36&#x27;</span>,<br>&#125;<br><br><span class="hljs-comment"># 评论数据的请求地址</span><br>url = <span class="hljs-string">&#x27;https://music.163.com/weapi/comment/resource/comments/get?csrf_token=&#x27;</span><br><br><span class="hljs-comment"># 将encText和encSecKey打包起来</span><br>data = &#123;<br>    <span class="hljs-string">&#x27;params&#x27;</span>: encText,<br>    <span class="hljs-string">&#x27;encSecKey&#x27;</span>: encSecKey<br>&#125;<br><br><span class="hljs-comment"># 发送post请求并携带encText和encSecKey得到评论的json格式</span><br>respond = requests.post(url, headers=headers, data=data).json()<br><br><span class="hljs-comment"># 输出评论内容</span><br>comments = respond[<span class="hljs-string">&#x27;data&#x27;</span>][<span class="hljs-string">&#x27;comments&#x27;</span>]<br><span class="hljs-keyword">for</span> comment <span class="hljs-keyword">in</span> comments:<br>    <span class="hljs-built_in">print</span>(comment[<span class="hljs-string">&#x27;content&#x27;</span>])<br><br></code></pre></td></tr></table></figure>
-
-<pre><code class="hljs">哈哈哈哈哈 太明显啦 热评一眼看到了
-是⛵还是真的不知道？
-最近被TZ的同类反串的已经分辨不清楚了，它的同类就喜欢这样来抹黑
-点了
-叠个甲，我不玩王者
-怕被某些人指责王者荣耀玩家是这样的
-[多多比耶]该听歌啦
-讨厌
-热评直接偷啊你
-上次听到这首歌的时候还是在高三那年的冬天，在课间休息的时候与同桌的女生一人一个耳机听着这首歌。周围的同学有的趴在桌上休息、有的在算着题目、有的在后面聊天，透过凝结着水雾的窗户还能依稀望见外面飘零的雪花。转眼间。我已经是大四了。又是一个毕业季，可惜再没有人和我用一个耳机听这首歌了
-
-新婚快乐！
-许嵩的歌也要vip了？？
-为什么十几年前的人声听起来也没有明显的短板，那时就混音了吗
-初听还是小学生，再听已是大学生[流泪]
-别再嗯 额 哦了 我不想回.
-你说的这段话让我想起一首歌
-他怎么了，听说是舔狗
-点了
-可是现在听歌要收费[多多大哭]
-看似很好的关系 其实不过如此.
-你又知道了，快下去确实一下🤣👉
-……真是病的
-如果在看你一眼，是否还会有感觉～
-</code></pre>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><br></code></pre></td></tr></table></figure>
 
                 
               </div>
